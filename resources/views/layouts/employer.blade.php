@@ -20,7 +20,7 @@
                         <a target="_blank" href="{{'https://'.$company->website}}"><i class="fas fa-globe"></i></a>
                       </div>
                     </div>
-                  </div>    
+                  </div>
                 </div>
                 <div class="col-sm-12 col-md-8 pl-md-0 pl-sm-3 ">
                     @yield('content')
@@ -40,7 +40,7 @@
     height:12rem;
     margin-bottom: 3rem;
     background: linear-gradient(to right, #185A91, #3498DA);
-    
+
   }
   .employer-card img{
     border:1px solid #ccc;
@@ -48,9 +48,9 @@
     position: absolute;
     bottom:-40px;
     left:50%;
-    background-color:white; 
+    background-color:white;
     width:100px;
-    transform: translateX(-50%);    
+    transform: translateX(-50%);
   }
 </style>
 @endpush

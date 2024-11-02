@@ -5,7 +5,7 @@
   {{-- header --}}
   <section class="home-page pt-4">
     <div class="container">
-      <form action="{{route('job.index')}}">
+      <form action="{{route('job.index')}}" method="GET">
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <div class="px-4">
@@ -28,11 +28,11 @@
               </div>
             </div>
             </div>
-        </div>   
+        </div>
       </form>
     </div>
   </section>
-  
+
   {{-- jobs list --}}
   <section class="jobs-section py-5">
     <div class="container-fluid px-0">
@@ -72,9 +72,8 @@
               <a class="btn secondary-btn" href="{{route('job.index')}}">Show all jobs</a>
             </div>
           </div>
-       
-        <div class="col-sm-12 col-md-3 mr-auto">
 
+        <div class="col-sm-12 col-md-3 mr-auto">
           <div class="card mb-4">
             <div class="card-header">
               <p class="font-weight-bold"><i class="fas fa-building"></i> Top Employers</p>
@@ -86,7 +85,7 @@
                   <a href="{{route('account.employer',['employer'=>$employer])}}">
                     <img src="{{asset($employer->logo)}}" width="60px" class="img-fluid" alt="">
                   </a>
-                </div> 
+                </div>
               @endforeach
               </div>
             </div>

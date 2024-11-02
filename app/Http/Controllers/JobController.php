@@ -10,38 +10,41 @@ use Illuminate\Http\Request;
 
 class JobController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        return view('job.index');
-    }
+        $posts = Post::query();
+        $categories = CompanyCategory::all();
 
-    //api route
-    public function search(Request $request)
-    {
         if ($request->q) {
-            $posts = Post::where('job_title', 'LIKE', '%' . $request->q . '%');
-        } elseif ($request->category_id) {
-            $posts = Post::whereHas('company', function ($query) use ($request) {
-                return $query->where('company_category_id', $request->category_id);
+            $posts = $posts->where('job_title', 'LIKE', '%' . $request->q . '%');
+        }
+        if ($request->category_id) {
+            $posts = $posts->whereHas('company', function ($query) use ($request) {
+                $query->where('company_category_id', $request->category_id);
             });
-        } elseif ($request->job_level) {
-            $posts = Post::where('job_level', 'Like', '%' . $request->job_level . '%');
-        } elseif ($request->education_level) {
-            $posts = Post::where('education_level', 'Like', '%' . $request->education_level . '%');
-        } elseif ($request->employment_type) {
-            $posts = Post::where('employment_type', 'Like', '%' . $request->employment_type . '%');
-        } else {
-            $posts = Post::take(30);
+        }
+        if ($request->job_level) {
+            $posts = $posts->where('job_level', 'LIKE', '%' . $request->job_level . '%');
+        }
+        if ($request->education_level) {
+            $posts = $posts->where('education_level', 'LIKE', '%' . $request->education_level . '%');
+        }
+        if ($request->employment_type) {
+            $posts = $posts->where('employment_type', 'LIKE', '%' . $request->employment_type . '%');
+        }
+        if ($request->job_location) {
+            $posts = $posts->where('job_location', 'LIKE', '%' . $request->job_location . '%');
         }
 
         $posts = $posts->has('company')->with('company')->paginate(6);
 
-        return $posts->toJson();
+        return view('job.index', compact('posts', 'categories'));
     }
+
     public function getCategories()
     {
         $categories = CompanyCategory::all();
-        return $categories->toJson();
+        return view('job.index', compact('categories'));
     }
     public function getAllOrganization()
     {

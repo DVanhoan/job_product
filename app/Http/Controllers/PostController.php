@@ -8,9 +8,17 @@ use App\Models\CompanyCategory;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
+use App\Services\ProvinceService;
 
 class PostController extends Controller
 {
+
+    private $provinceService;
+
+    public function __construct(ProvinceService $provinceService)
+    {
+        $this->provinceService = $provinceService;
+    }
     public function index()
     {
         $posts = Post::latest()->take(20)->with('company')->get();
@@ -25,11 +33,13 @@ class PostController extends Controller
 
     public function create()
     {
+        $provinces = $this->provinceService->getProvinces();
+        $dataObject = json_decode(json_encode($provinces));
         if (!auth()->user()->company) {
             Alert::toast('You must create a company first!', 'info');
             return redirect()->route('company.create');
         }
-        return view('post.create');
+        return view('post.create', compact('provinces'));
     }
 
     public function store(Request $request)

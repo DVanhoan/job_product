@@ -44,11 +44,11 @@
                 </div>
               </div>
             </div>
-       
+
 
             <div class="form-group">
               <label for="">Employment Type</label>
-              <select name="employment_type" class="form-control" name="employment_type" value="{{old('employment_type')}}">
+              <select name="employment_type" class="form-control" value="{{old('employment_type')}}">
                 <option value="Full Time">Full Time</option>
                 <option value="Part Time">Part Time</option>
                 <option value="Freelance">Freelance</option>
@@ -60,7 +60,14 @@
 
             <div class="form-group">
               <label for="">Job location</label>
-              <input type="text" placeholder="Job location" class="form-control @error('job_location') is-invalid @enderror" name="job_location" value="{{ old('job_location') }}" required >
+              {{-- <input type="text" placeholder="Job location" class="form-control @error('job_location') is-invalid @enderror" name="job_location" value="{{ old('job_location') }}" required > --}}
+
+              <select name="job_location" class="form-control" value="{{old('job_location')}}">
+                @foreach($provinces as $location)
+                <option value="Full Time">{{ $location->province_name }}</option>
+                @endforeach
+              </select>
+
               @error('job_location')
                   <span class="invalid-feedback" role="alert">
                       <strong>{{ $message }}</strong>
@@ -150,12 +157,12 @@
     placeholder: 'Job Reqirement , Job Specifications etc ...',
     theme: 'snow'
     });
-    
+
 
     const postBtn = document.querySelector('#postBtn');
     const postForm = document.querySelector('#postForm');
     const specifications = document.querySelector('#specifications');
-    
+
     if(specifications.value){
       quill.root.innerHTML = specifications.value;
     }
@@ -163,7 +170,7 @@
     postBtn.addEventListener('click',function(e){
       e.preventDefault();
       specifications.value = quill.root.innerHTML
-      
+
       postForm.submit();
     })
   })

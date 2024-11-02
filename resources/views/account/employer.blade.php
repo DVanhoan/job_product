@@ -24,9 +24,9 @@
                   <p class="small"><i class="fas fa-lightbulb"></i> {{$post->skills}}</p>
                   <div class="d-flex justify-content-between py-3">
                     <div class="text-danger">
-                      <i class="fas fa-clock"></i> <span class="">Apply Before: 
-                        @php    
-                        $date = new DateTime($post->deadline);  
+                      <i class="fas fa-clock"></i> <span class="">Apply Before:
+                        @php
+                        $date = new DateTime($post->deadline);
                         echo date('d', $date->getTimestamp() - time());
                         @endphp day[s] from now</span>
                     </div>

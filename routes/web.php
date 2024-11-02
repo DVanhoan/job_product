@@ -18,6 +18,9 @@ Route::get('employer/{employer}', [AuthorController::class, 'employer'])->name('
 
 
 Route::get('/search', [JobController::class, 'index'])->name('job.index');
+Route::get('company-categories', [JobController::class, 'getCategories'])->name('job.getCategories');
+Route::get('job-titles', [JobController::class, 'getAllByTitle'])->name('job.getAllByTitle');
+Route::get('companies', [JobController::class, 'getAllOrganization'])->name('job.getAllOrganization');
 
 //auth routes
 Route::middleware('auth')->prefix('account')->group(function () {

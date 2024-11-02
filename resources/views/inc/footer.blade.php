@@ -54,6 +54,7 @@
 @push('css')
 <style>
   .footer-main {
+    bottom: 0;
     background-color: #272727;
     padding: 20px 0;
     color: #ddd;

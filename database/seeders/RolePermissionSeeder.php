@@ -20,21 +20,30 @@ class RolePermissionSeeder extends Seeder
         foreach ($roles as $role) {
             DB::table('roles')->insert([
                 'name' => $role,
-                'guard_name' => 'api',
+                'guard_name' => 'web',
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
             ]);
         }
 
         $permissions = [
-            'view-dashboard', 'create-post', 'edit-post', 'delete-post',
-            'manage-authors', 'author-section', 'create-category', 'edit-category', 'delete-category',
-            'create-company', 'edit-company', 'delete-company'
+            'view-dashboard',
+            'create-post',
+            'edit-post',
+            'delete-post',
+            'manage-authors',
+            'author-section',
+            'create-category',
+            'edit-category',
+            'delete-category',
+            'create-company',
+            'edit-company',
+            'delete-company'
         ];
         foreach ($permissions as $permission) {
             DB::table('permissions')->insert([
                 'name' => $permission,
-                'guard_name' => 'api',
+                'guard_name' => 'web',
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),
             ]);

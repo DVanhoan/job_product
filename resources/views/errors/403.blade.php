@@ -84,12 +84,12 @@ document.addEventListener("mousemove", evt => {
 
   root.style.setProperty("--mouse-x", x);
   root.style.setProperty("--mouse-y", y);
-  
+
   cx = 115 + 30 * x;
   cy = 50 + 30 * y;
   eyef.setAttribute("cx", cx);
   eyef.setAttribute("cy", cy);
-  
+
 });
 
 document.addEventListener("touchmove", touchHandler => {
