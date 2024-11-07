@@ -5,7 +5,7 @@ services:
             context: .
             dockerfile: Dockerfile
         ports:
-            - "8000:80"
+            - "8000:8000" # Nhất quán giữa Dockerfile và docker-compose
         environment:
             - APP_ENV=production
             - APP_DEBUG=false
@@ -19,7 +19,8 @@ services:
         depends_on:
             - db
         volumes:
-            - .:/var/www/html
+            - .:/var/www
+
     db:
         image: mysql:5.7
         environment:

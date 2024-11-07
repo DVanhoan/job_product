@@ -29,8 +29,8 @@ RUN composer install --no-dev --optimize-autoloader
 # Thiết lập quyền cho thư mục lưu trữ và bộ nhớ đệm
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
-# Mở cổng 8000 (hoặc cổng khác nếu bạn cần)
-EXPOSE 8000
+# Mở cổng 9000 cho PHP-FPM (nếu dùng với nginx)
+EXPOSE 9000
 
-# Lệnh khởi động ứng dụng Laravel
-CMD php artisan serve --host=0.0.0.0 --port=8000
+# Lệnh khởi động PHP-FPM
+CMD ["php-fpm"]
