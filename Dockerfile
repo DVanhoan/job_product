@@ -1,32 +1,36 @@
-# Sử dụng image PHP và Apache
-FROM php:8.3.9-apache
+# Sử dụng image PHP chính thức làm base image
+FROM php:8.3.9-fpm AS base
 
-# Cài đặt các extension PHP cần thiết
+# Cài đặt các dependencies cần thiết cho Composer và PHP
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg62-turbo-dev \
-    libfreetype6-dev \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install gd pdo pdo_mysql
+    git \
+    unzip \
+    zip \
+    && rm -rf /var/lib/apt/lists/*
 
-# Cài Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+# Cài đặt Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-# Tạo thư mục cho ứng dụng và copy mã nguồn vào
+# Thiết lập thư mục làm việc
 WORKDIR /var/www/html
+
+# Copy toàn bộ mã nguồn vào container
 COPY . .
+
+# Cho phép Composer chạy với quyền root (không khuyến khích nhưng dùng tạm)
+ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Cài đặt Composer dependencies
 RUN composer install --optimize-autoloader --no-dev
 
-# Tạo file .env
-COPY .env.example .env
+# Cấu hình môi trường sản xuất (nếu cần)
+# RUN php artisan key:generate
 
-# Thiết lập các quyền cần thiết cho storage và bootstrap/cache
+# Cài đặt permissions cho thư mục storage và bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 80
-EXPOSE 80
+# Cấu hình port cho container (nếu cần)
+EXPOSE 9000
 
-# Lệnh khởi chạy
-CMD php artisan serve --host=0.0.0.0 --port=80
+# Khởi động PHP-FPM
+CMD ["php-fpm"]
