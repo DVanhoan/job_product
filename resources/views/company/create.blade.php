@@ -18,18 +18,35 @@
         </div>
 
         <div class="pb-3">
-          <div class="py-3">
-            <p>Company logo</p>
-          </div>
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" id="validatedCustomFile" name="logo" required>
-            <label class="custom-file-label" for="validatedCustomFile">Choose logo...</label>
-            @error('logo')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
+            <div class="py-3">
+              <p>Company logo</p>
+              <img id="logo_image" src="{{ asset('images/user-profile.png') }}" width="80px" alt="">
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" name="logo" id="logo_input">
+              <label class="custom-file-label">Choose logo...</label>
+              @error('logo')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
+        </div>
+
+        <div class="pb-3">
+            <div class="py-3">
+              <p class="py-2">Company banner/cover</p>
+              <img id="cover_image" src="{{ asset('images/companies/banner.jpg') }}" width="200px" class="img-fluid" alt="">
+            </div>
+            <div class="custom-file">
+              <input type="file" class="custom-file-input" name="cover_img" id="cover_img">
+              <label class="custom-file-label" for="cover_img">Choose cover img...</label>
+              @error('cover_img')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+              @enderror
+            </div>
         </div>
 
         <div class="form-group">
@@ -57,20 +74,7 @@
             @enderror
         </div>
 
-        <div class="pb-3">
-          <div class="py-3">
-            <p>Company banner/cover</p>
-          </div>
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" name="cover_img" >
-            <label class="custom-file-label">Choose cover img...</label>
-            @error('cover_img')
-              <span class="invalid-feedback" role="alert">
-                  <strong>{{ $message }}</strong>
-              </span>
-            @enderror
-          </div>
-        </div>
+
 
         <div class="pt-2">
           <p class="mt-3 alert alert-primary">Provide a short paragraph description about your company</p>
@@ -93,3 +97,16 @@
     </div>
   </div>
 @endSection
+
+
+@push('js')
+<script>
+document.getElementById('logo_input').onchange = function(event) {
+    document.getElementById('logo_image').src = URL.createObjectURL(event.target.files[0]);
+};
+
+document.getElementById('cover_img').onchange = function(event) {
+    document.getElementById('cover_image').src = URL.createObjectURL(event.target.files[0]);
+};
+</script>
+@endpush

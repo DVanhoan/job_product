@@ -257,7 +257,7 @@
   }
   .job-item:hover {
     background-color:#eee;
-  } 
+  }
 
 </style>
 @endpush

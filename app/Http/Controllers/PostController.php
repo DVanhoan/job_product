@@ -9,17 +9,15 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Services\ProvinceService;
-use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
-
     private $provinceService;
-
     public function __construct(ProvinceService $provinceService)
     {
         $this->provinceService = $provinceService;
     }
+
     public function index()
     {
         $posts = Post::latest()->take(20)->with('company')->get();
@@ -31,7 +29,6 @@ class PostController extends Controller
             'topEmployers' => $topEmployers
         ]);
     }
-
 
     public function getProvinces()
     {
@@ -46,25 +43,26 @@ class PostController extends Controller
         return $provinces;
     }
 
+
     public function create()
     {
         $provinces = $this->getProvinces();
-
         if (!auth()->user()->company) {
             Alert::info('You must create a company first!', 'info');
             return redirect()->route('company.create');
         }
-
         return view('post.create', compact('provinces'));
     }
 
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
+        $this->requestValidate($request);
+
         $postData = array_merge(['company_id' => auth()->user()->company->id], $request->all());
 
         $post = Post::create($postData);
         if ($post) {
-            Alert::success('Post listed!', 'success');
+            Alert::success('Created Post!', 'success');
             return redirect()->route('account.authorSection');
         }
         Alert::warning('Post failed to list!', 'warning');
@@ -90,12 +88,12 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        $provinces = $this->getProvinces();
-        return view('post.edit', compact('post', 'provinces'));
+        return view('post.edit', compact('post'));
     }
 
-    public function update(PostRequest $request, $post)
+    public function update(Request $request, $post)
     {
+        $this->requestValidate($request);
         $getPost = Post::findOrFail($post);
 
         $newPost = $getPost->update($request->all());
@@ -113,5 +111,22 @@ class PostController extends Controller
             return redirect()->route('account.authorSection');
         }
         return redirect()->back();
+    }
+
+    protected function requestValidate($request)
+    {
+        return $request->validate([
+            'job_title' => 'required|min:3',
+            'job_level' => 'required',
+            'vacancy_count' => 'required|int',
+            'employment_type' => 'required',
+            'job_location' => 'required',
+            'salary' => 'required',
+            'deadline' => 'required',
+            'education_level' => 'required',
+            'experience' => 'required',
+            'skills' => 'required',
+            'specifications' => 'sometimes|min:5',
+        ]);
     }
 }
