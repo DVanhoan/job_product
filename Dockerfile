@@ -41,6 +41,7 @@ ENV APP_ENV=production
 ENV APP_DEBUG=false
 ENV APP_KEY=base64:mSjh2iYrFtnZixHmWZZjLevOsIFiH2RkIKv9Olje628=
 
+RUN php artisan key:generate --force
 # Chạy lệnh Laravel Artisan optimize để tối ưu ứng dụng
 RUN php artisan config:cache \
     && php artisan route:cache \
