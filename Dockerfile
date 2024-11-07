@@ -29,8 +29,9 @@ ENV COMPOSER_ALLOW_SUPERUSER=1
 # Cài đặt Composer dependencies
 RUN composer install --no-dev --optimize-autoloader --no-scripts --prefer-dist
 
-# Copy toàn bộ mã nguồn vào container sau khi cài đặt dependencies
+# Sao chép mã nguồn và file .env vào container
 COPY . .
+COPY .env.example .env
 
 # Cài đặt permissions cho thư mục storage và bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
@@ -39,16 +40,12 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 # Thiết lập biến môi trường để chạy ứng dụng Laravel trong môi trường sản xuất
 ENV APP_ENV=production
 ENV APP_DEBUG=false
-ENV APP_KEY=base64:mSjh2iYrFtnZixHmWZZjLevOsIFiH2RkIKv9Olje628=
 
+# Khởi tạo APP_KEY
 RUN php artisan key:generate --force
-# Chạy lệnh Laravel Artisan optimize để tối ưu ứng dụng
-RUN php artisan config:cache \
-    && php artisan route:cache \
-    && php artisan view:cache
 
-# Cấu hình port cho container (thông thường ứng dụng Laravel sử dụng port 8000 nếu chạy bằng php artisan serve)
+# Expose cổng cho ứng dụng PHP-FPM
 EXPOSE 9000
 
-# Khởi động PHP-FPM
+# Chạy PHP-FPM
 CMD ["php-fpm"]
