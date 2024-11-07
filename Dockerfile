@@ -30,7 +30,7 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/storage /var/www/bootstrap/cache
 
 # Mở cổng 9000 cho PHP-FPM (nếu dùng với nginx)
-EXPOSE 9000
+EXPOSE 8000
 
 # Lệnh khởi động PHP-FPM
 CMD ["php-fpm"]
