@@ -1,5 +1,5 @@
-# Sử dụng PHP 8.1 (hoặc phiên bản phù hợp với Laravel của bạn)
-FROM php:8.1-fpm
+# Sử dụng PHP 8.3.9 (hoặc phiên bản phù hợp với Laravel của bạn)
+FROM php:8.3.9-fpm
 
 # Cài đặt các tiện ích và extension cần thiết cho Laravel
 RUN apt-get update && apt-get install -y \
