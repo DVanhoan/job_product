@@ -83,7 +83,7 @@
                 </span>
             @enderror
         </div>
-   
+
         <div class="line-divider"></div>
         <div class="mt-3">
           <button type="submit" class="btn primary-btn">Create company</button>

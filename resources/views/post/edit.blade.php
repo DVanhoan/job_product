@@ -45,7 +45,7 @@
                 </div>
               </div>
             </div>
-       
+
 
             <div class="form-group">
               <label for="">Employment Type</label>
@@ -59,14 +59,14 @@
               </select>
             </div>
 
+
             <div class="form-group">
               <label for="">Job location</label>
-              <input type="text" placeholder="Job location" class="form-control @error('job_location') is-invalid @enderror" name="job_location" value="{{ $post->job_location }}" required >
-              @error('job_location')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
+              <select name="job_location" class="form-control" value="{{old('job_location')}}">
+                @foreach($provinces as $location)
+                <option value="{{$location->name}}"> {{$location->name}}</option>
+                @endforeach
+              </select>
             </div>
 
             <div class="form-group">
@@ -151,12 +151,12 @@
     placeholder: 'Job Reqirement , Job Specifications etc ...',
     theme: 'snow'
     });
-    
+
 
     const postBtn = document.querySelector('#postBtn');
     const postForm = document.querySelector('#postForm');
     const specifications = document.querySelector('#specifications');
-    
+
     if(specifications.value){
       quill.root.innerHTML = specifications.value;
     }
@@ -164,7 +164,7 @@
     postBtn.addEventListener('click',function(e){
       e.preventDefault();
       specifications.value = quill.root.innerHTML
-      
+
       postForm.submit();
     })
   })

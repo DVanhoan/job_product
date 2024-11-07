@@ -9,6 +9,7 @@ use App\Models\Post;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Services\ProvinceService;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
@@ -31,29 +32,42 @@ class PostController extends Controller
         ]);
     }
 
+
+    public function getProvinces()
+    {
+        $dataObject = $this->provinceService->getProvinces();
+        $provinces = collect($dataObject['results'])->map(function ($dataObject) {
+            return (object) [
+                'id' => $dataObject['province_id'],
+                'name' => $dataObject['province_name'],
+                'type' => $dataObject['province_type']
+            ];
+        })->all();
+        return $provinces;
+    }
+
     public function create()
     {
-        $provinces = $this->provinceService->getProvinces();
-        $dataObject = json_decode(json_encode($provinces));
+        $provinces = $this->getProvinces();
+
         if (!auth()->user()->company) {
-            Alert::toast('You must create a company first!', 'info');
+            Alert::info('You must create a company first!', 'info');
             return redirect()->route('company.create');
         }
+
         return view('post.create', compact('provinces'));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $this->requestValidate($request);
-
         $postData = array_merge(['company_id' => auth()->user()->company->id], $request->all());
 
         $post = Post::create($postData);
         if ($post) {
-            Alert::toast('Post listed!', 'success');
+            Alert::success('Post listed!', 'success');
             return redirect()->route('account.authorSection');
         }
-        Alert::toast('Post failed to list!', 'warning');
+        Alert::warning('Post failed to list!', 'warning');
         return redirect()->back();
     }
 
@@ -76,17 +90,17 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        $provinces = $this->getProvinces();
+        return view('post.edit', compact('post', 'provinces'));
     }
 
-    public function update(Request $request, $post)
+    public function update(PostRequest $request, $post)
     {
-        $this->requestValidate($request);
         $getPost = Post::findOrFail($post);
 
         $newPost = $getPost->update($request->all());
         if ($newPost) {
-            Alert::toast('Post successfully updated!', 'success');
+            Alert::success('Post successfully updated!', 'success');
             return redirect()->route('account.authorSection');
         }
         return redirect()->route('post.index');
@@ -95,26 +109,9 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         if ($post->delete()) {
-            Alert::toast('Post successfully deleted!', 'success');
+            Alert::success('Post successfully deleted!', 'success');
             return redirect()->route('account.authorSection');
         }
         return redirect()->back();
-    }
-
-    protected function requestValidate($request)
-    {
-        return $request->validate([
-            'job_title' => 'required|min:3',
-            'job_level' => 'required',
-            'vacancy_count' => 'required|int',
-            'employment_type' => 'required',
-            'job_location' => 'required',
-            'salary' => 'required',
-            'deadline' => 'required',
-            'education_level' => 'required',
-            'experience' => 'required',
-            'skills' => 'required',
-            'specifications' => 'sometimes|min:5',
-        ]);
     }
 }

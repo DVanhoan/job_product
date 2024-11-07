@@ -60,19 +60,11 @@
 
             <div class="form-group">
               <label for="">Job location</label>
-              {{-- <input type="text" placeholder="Job location" class="form-control @error('job_location') is-invalid @enderror" name="job_location" value="{{ old('job_location') }}" required > --}}
-
               <select name="job_location" class="form-control" value="{{old('job_location')}}">
                 @foreach($provinces as $location)
-                <option value="Full Time">{{ $location->province_name }}</option>
+                <option value="{{$location->name }}"> {{$location->name}}</option>
                 @endforeach
               </select>
-
-              @error('job_location')
-                  <span class="invalid-feedback" role="alert">
-                      <strong>{{ $message }}</strong>
-                  </span>
-              @enderror
             </div>
 
             <div class="form-group">

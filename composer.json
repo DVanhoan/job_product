@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "*",
         "laravel/framework": "^9.0",
+        "laravel/socialite": "^5.16",
         "laravel/tinker": "^2.7",
         "realrashid/sweet-alert": "^7.2",
         "spatie/laravel-permission": "^6.9",

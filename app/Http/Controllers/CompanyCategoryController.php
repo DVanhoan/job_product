@@ -17,7 +17,7 @@ class CompanyCategoryController extends Controller
         CompanyCategory::create([
             'category_name' => $request->category_name
         ]);
-        Alert::toast('Category Created!', 'success');
+        Alert::success('Category Created!', 'success');
         return redirect()->route('account.dashboard');
     }
 
@@ -35,7 +35,7 @@ class CompanyCategoryController extends Controller
         $category->update([
             'category_name' => $request->category_name
         ]);
-        Alert::toast('Category Updated!', 'success');
+        Alert::success('Category Updated!', 'success');
         return redirect()->route('account.dashboard');
     }
 
@@ -43,7 +43,7 @@ class CompanyCategoryController extends Controller
     {
         $category = CompanyCategory::find($id);
         $category->delete();
-        Alert::toast('Category Delete!', 'success');
+        Alert::success('Category Delete!', 'success');
         return redirect()->route('account.dashboard');
     }
 }

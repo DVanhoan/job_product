@@ -129,6 +129,22 @@
                                     </form>
                                 </div>
                             </div>
+
+                            <hr class="my-3">
+                            <!-- Employment Type -->
+                            <div class="pb-0">
+                                <div class="card-title mb-1">Job Location</div>
+                                <div class="card-body p-0">
+                                    <form method="GET" action="{{ route('job.index') }}">
+                                        <select name="job_location" class="form-control" onchange="this.form.submit()">
+                                            <option disabled selected value>-- select an option --</option>
+                                            @foreach($provinces as $location)
+                                                <option value="{{ $location->name }}" {{ request('job_location') == $location->name ? 'selected' : '' }}>{{ $location->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

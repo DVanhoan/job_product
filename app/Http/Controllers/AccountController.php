@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use RealRashid\SweetAlert\Facades\Alert;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class AccountController extends Controller
 {
@@ -40,7 +41,7 @@ class AccountController extends Controller
         if ($this->hasApplied(auth()->user(), $request->post_id)) {
             Alert::toast('You have already applied for this job!', 'success');
             return redirect()->route('post.show', ['job' => $request->post_id]);
-        }else if(!auth()->user()->hasRole('user')){
+        } else if (!auth()->user()->hasRole('user')) {
             Alert::toast('You are a employer! You can\'t apply for the job! ', 'error');
             return redirect()->route('post.show', ['job' => $request->post_id]);
         }
@@ -139,6 +140,35 @@ class AccountController extends Controller
             return true;
         } else {
             return false;
+        }
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = Auth::user();
+
+
+        $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:325201',
+            'phone' => 'nullable|string|max:15',
+        ]);
+
+        try {
+            if ($request->hasFile('profile_image')) {
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('profile_image')->getRealPath())->getSecurePath();
+                $user->avatar = $uploadedFileUrl;
+            }
+
+            $user->save();
+
+
+
+            Alert::success('Updated ', 'Success Message');
+            return redirect(route('account.index'));
+        } catch (\Exception $e) {
+
+            Alert::error('Failed', 'Error Message');
+            return redirect()->back();
         }
     }
 }

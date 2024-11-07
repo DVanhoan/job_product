@@ -1,155 +1,110 @@
 @extends('layouts.account')
 
 @section('content')
-<div class="account-layoutborder">
-  <div class="account-hdr bg-primary text-white border ">
-    User Account
-  </div>
-  <div class="account-bdy border py-3">
-    <div class="row container d-flex justify-content-center">
-        <div class="col-xl-12 col-md-12">
-            <div class="card user-card-full">
-                <div class="row m-l-0 m-r-0">
-                    <div class="col-sm-4 bg-c-lite-green user-profile">
-                        <div class="card-block text-center text-white">
-                            <div class="m-b-25"> <img src="{{asset('images/user-profile.png')}}" class="img-radius" alt="User-Profile-Image"> </div>
-                            <h6 class="f-w-600">{{auth()->user()->name}}</h6>
-                            @role('user')
-                            <p>User</p> 
-                            @endrole
-                            @role('admin')
-                            <p>Author (Job Lister) <i class="fas fa-pen-square"></i></p> 
-                            @endrole
+<div class="account-layout border">
+    <div class="account-hdr bg-primary text-white border">User Account</div>
+    <div class="account-bdy border py-4">
+        <div class="container d-flex justify-content-center">
+            <div class="card user-card shadow-sm" style="width: 100%; max-width: 750px; border-radius: 10px;">
+                <div class="row g-0">
+                    <!-- Profile Image Section -->
+                    <div class="col-sm-4 bg-c-lite-green user-profile text-center d-flex flex-column justify-content-center align-items-center p-4">
+                        <div class="profile-img-container">
+                            <img id="profileImg" src="{{ asset(auth()->user()->avatar ?? 'images/user-profile.png') }}" alt="User Profile Image">
+                            <div class="edit-icon-overlay" onclick="document.getElementById('profileInput').click()">
+                                <i class="fas fa-edit"></i>
+                            </div>
+                            <form id="profileForm" class="d-none" action="{{ route('account.updateProfileImage') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <input type="file" id="profileInput" name="profile_image" accept="image/*" class="d-none">
+                            </form>
+                        </div>
+                        <div class="user-info mt-3 text-center">
+                            <h6 class="f-w-600">{{ auth()->user()->name }}</h6>
+                            <p class="text-muted">{{ auth()->user()->hasRole('user') ? 'User' : 'Author (Job Lister)' }}</p>
                         </div>
                     </div>
-                    <div class="col-sm-8">
-                        <div class="card-block">
-                            <h6 class="m-b-20 p-b-5 b-b-default f-w-600">Information</h6>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="m-b-10 f-w-600">Email</p>
-                                <h6 class="text-muted f-w-400">{{auth()->user()->email}}</h6>
-                                </div>
-                                <div class="col-sm-6">
-                                    <p class="m-b-10 f-w-600">Phone</p>
-                                    <h6 class="text-muted f-w-400">not set</h6>
-                                </div>
+
+                    <!-- Information Section -->
+                    <div class="col-sm-8 p-4">
+                        <h6 class="f-w-600 mb-3">Information</h6>
+                        <div class="row">
+                            <div class="col-6">
+                                <p class="f-w-600">Email</p>
+                                <h6 class="text-muted">{{ auth()->user()->email }}</h6>
                             </div>
-                            <h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Account</h6>
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <p class="m-b-10 f-w-600">Password</p>
-                                    <a href="{{route('account.changePassword')}}" class="btn primary-outline-btn">Change password</a>
-                                </div>
-                                <div class="col-sm-6">
-                                  <p class="m-b-10 f-w-600">Logout</p>
-                                    <a href="{{route('logout')}}" class="btn btn-outline-dark">Logout</a>
-                                </div>
+                            <div class="col-6">
+                                <p class="f-w-600">Phone</p>
+                                <h6 class="text-muted">Not set</h6>
                             </div>
-                            <ul class="social-link list-unstyled m-t-40 m-b-10">
-                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
-                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
-                                <li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
-                            </ul>
                         </div>
+                        <button type="button" class="btn btn-primary mt-4 w-100" onclick="document.getElementById('profileForm').submit()">Update Profile Image</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-  </div>
 </div>
-@endSection
+@endsection
 
 @push('css')
 <style>
-.user-card-full {
+/* Profile Image Container */
+.profile-img-container {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
     overflow: hidden;
-}
-.card {
-    border-radius: 5px;
-    -webkit-box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
-    box-shadow: 0 1px 20px 0 rgba(69, 90, 100, 0.08);
-    border: none;
-    margin-bottom: 30px
-}
-.m-r-0 {
-    margin-right: 0px
-}
-.m-l-0 {
-    margin-left: 0px
-}
-.user-card-full .user-profile {
-    border-radius: 5px 0 0 5px
-}
-.bg-c-lite-green {
-    background: linear-gradient(to right, #185A91, #3498DA)
-}
-.user-profile {
-    padding: 20px 0
-}
-.card-block {
-    padding: 1.25rem
-}
-.m-b-25 {
-    margin-bottom: 25px
-}
-.img-radius {
-    border-radius: 5px
-}
-h6 {
-    font-size: 14px
-}
-.card .card-block p {
-    line-height: 25px
+    position: relative;
+    border: 4px solid white;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-@media only screen and (min-width: 1400px) {
-    p {
-        font-size: 14px
-    }
+.profile-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
-.card-block {
-    padding: 1.25rem
+
+.edit-icon-overlay {
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    position: absolute;
+    border-radius: 50%;
+    transition: background 0.3s;
 }
-.b-b-default {
-    border-bottom: 1px solid #e0e0e0
+
+.edit-icon-overlay:hover {
+    background: rgba(0, 0, 0, 0.7);
 }
-.m-b-20 {
-    margin-bottom: 20px
+
+.profile-img-container:hover .edit-icon-overlay {
+    display: flex;
 }
-.p-b-5 {
-    padding-bottom: 5px !important
+
+.user-profile {
+    padding: 20px;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.9);
 }
-.card .card-block p {
-    line-height: 25px
+
+.user-info {
+    font-weight: 600;
 }
-.m-b-10 {
-    margin-bottom: 10px
-}
-.text-muted {
-    color: #919aa3 !important
-}
-.b-b-default {
-    border-bottom: 1px solid #e0e0e0
-}
-.f-w-600 {
-    font-weight: 600
-}
-.m-b-20 {
-    margin-bottom: 20px
-}
-.m-t-40 {
-    margin-top: 20px
-}
-.p-b-5 {
-    padding-bottom: 5px !important
-}
-.m-b-10 {
-    margin-bottom: 10px
-}
-.m-t-40 {
-    margin-top: 20px
+
+.card {
+    border-radius: 10px;
 }
 </style>
 @endpush

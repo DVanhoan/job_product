@@ -7,6 +7,8 @@ use App\Models\CompanyCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use App\Http\Requests\CompanyRequest;
 
 class CompanyController extends Controller
 {
@@ -18,11 +20,11 @@ class CompanyController extends Controller
     public function create()
     {
         if (auth()->user()->company) {
-            Alert::toast('You already have a company!', 'info');
+            Alert::warning('You already have a company!', 'info');
             return $this->edit();
         }
         $categories = CompanyCategory::all();
-        return view('company.create', compact('categories'));
+        return response()->view('company.create', compact('categories'));
     }
 
     /**
@@ -31,16 +33,14 @@ class CompanyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CompanyRequest $request)
     {
-        $this->validateCompany($request);
-
         $company = new Company();
         if ($this->companySave($company, $request)) {
-            Alert::toast('Company created! Now you can add posts.', 'success');
+            Alert::success('Company created! Now you can add posts.', 'success');
             return redirect()->route('account.authorSection');
         }
-        Alert::toast('Failed!', 'error');
+        Alert::error('Failed!', 'error');
         return redirect()->route('account.authorSection');
     }
 
@@ -52,47 +52,48 @@ class CompanyController extends Controller
      */
     public function edit()
     {
-        $company = auth()->user()->company;
-        $categories = CompanyCategory::all();
-        return view('company.edit', compact('company', 'categories'));
+        $user = auth()->user();
+        if ($user->hasRole('author') && $user->can('edit-company')) {
+            $company = auth()->user()->company;
+            $categories = CompanyCategory::all();
+            return response()->view('company.edit', compact('company', 'categories'));
+        } else {
+            Alert::error('You don\'t have permission to edit company!', 'error');
+        }
     }
 
 
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request)
     {
-        $this->validateCompanyUpdate($request);
-
         $company = auth()->user()->company;
-        if ($this->companyUpdate($company, $request)) {
-            Alert::toast('Company created!', 'success');
+        $company->user_id = auth()->user()->id;
+        $company->title = $request->title;
+        $company->description = $request->description;
+        $company->company_category_id = $request->category;
+        $company->website = $request->website;
+
+        try {
+            if ($request->hasFile('logo')) {
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
+                $company->logo = $uploadedFileUrl;
+            }
+
+            if ($request->hasFile('cover_img')) {
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
+                $company->cover_img = $uploadedFileUrl;
+            }
+            $company->cover_img = 'nocover';
+
+            $company->save();
+
+            Alert::success('Updated!', 'success');
+            return redirect()->route('account.authorSection');
+        } catch (\Exception $e) {
+            Alert::error('Failed!', 'error');
             return redirect()->route('account.authorSection');
         }
-        Alert::toast('Failed!', 'error');
-        return redirect()->route('account.authorSection');
     }
 
-    protected function validateCompany(Request $request)
-    {
-        return $request->validate([
-            'title' => 'required|min:5',
-            'description' => 'required|min:5',
-            'logo' => 'required|image|max:2999',
-            'category' => 'required',
-            'website' => 'required|string',
-            'cover_img' => 'sometimes|image|max:3999'
-        ]);
-    }
-    protected function validateCompanyUpdate(Request $request)
-    {
-        return $request->validate([
-            'title' => 'required|min:5',
-            'description' => 'required|min:5',
-            'logo' => 'someiimes|image|max:2999',
-            'category' => 'required',
-            'website' => 'required|string',
-            'cover_img' => 'sometimes|image|max:3999'
-        ]);
-    }
     protected function companySave(Company $company, Request $request)
     {
         $company->user_id = auth()->user()->id;
@@ -109,7 +110,7 @@ class CompanyController extends Controller
         }
         $company->logo = 'storage/companies/logos/' . $fileNameToStore;
 
-        //cover image 
+        //cover image
         if ($request->hasFile('cover_img')) {
             $fileNameToStore = $this->getFileName($request->file('cover_img'));
             $coverPath = $request->file('cover_img')->storeAs('public/companies/cover', $fileNameToStore);
@@ -135,24 +136,14 @@ class CompanyController extends Controller
         $company->company_category_id = $request->category;
         $company->website = $request->website;
 
-        //logo should exist but still checking for the name
         if ($request->hasFile('logo')) {
-            $fileNameToStore = $this->getFileName($request->file('logo'));
-            $logoPath = $request->file('logo')->storeAs('public/companies/logos', $fileNameToStore);
-            if ($company->logo) {
-                Storage::delete('public/companies/logos/' . basename($company->logo));
-            }
-            $company->logo = 'storage/companies/logos/' . $fileNameToStore;
+            $uploadedFileUrl = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
+            $company->logo = $uploadedFileUrl;
         }
 
-        //cover image 
         if ($request->hasFile('cover_img')) {
-            $fileNameToStore = $this->getFileName($request->file('cover_img'));
-            $coverPath = $request->file('cover_img')->storeAs('public/companies/cover', $fileNameToStore);
-            if ($company->cover_img) {
-                Storage::delete('public/companies/cover/' . basename($company->cover_img));
-            }
-            $company->cover_img = 'storage/companies/cover/' . $fileNameToStore;
+            $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
+            $company->cover_img = $uploadedFileUrl;
         }
         $company->cover_img = 'nocover';
         if ($company->save()) {

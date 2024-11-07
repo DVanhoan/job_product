@@ -7,16 +7,26 @@ use App\Models\CompanyCategory;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use App\Services\ProvinceService;
 
 class JobController extends Controller
 {
+
+    private $provinceService;
+
+    public function __construct(ProvinceService $provinceService)
+    {
+        $this->provinceService = $provinceService;
+    }
+
     public function index(Request $request)
     {
         $posts = Post::query();
         $categories = CompanyCategory::all();
+        $provinces = $this->getProvinces();
 
         if ($request->q) {
-            $posts = $posts->where('job_title', 'LIKE', '%' . $request->q . '%');
+            $posts = $posts->where('job_title', 'LIKE', '%' . $request->q . '%')->orWhere('skills', 'LIKE', '%' . $request->q . '%');
         }
         if ($request->category_id) {
             $posts = $posts->whereHas('company', function ($query) use ($request) {
@@ -38,14 +48,22 @@ class JobController extends Controller
 
         $posts = $posts->has('company')->with('company')->paginate(6);
 
-        return view('job.index', compact('posts', 'categories'));
+        return view('job.index', compact('posts', 'categories', 'provinces'));
     }
 
-    public function getCategories()
+    public function getProvinces()
     {
-        $categories = CompanyCategory::all();
-        return view('job.index', compact('categories'));
+        $dataObject = $this->provinceService->getProvinces();
+        $provinces = collect($dataObject['results'])->map(function ($dataObject) {
+            return (object) [
+                'id' => $dataObject['province_id'],
+                'name' => $dataObject['province_name'],
+                'type' => $dataObject['province_type']
+            ];
+        })->all();
+        return $provinces;
     }
+
     public function getAllOrganization()
     {
         $companies = Company::all();

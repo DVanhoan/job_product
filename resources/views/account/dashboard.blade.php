@@ -89,7 +89,7 @@
                             <td>{{$author->company->title}}</td>
                             <td>
                             <a href="{{route('account.employer',['employer'=>$author->company])}}" class="btn primary-btn">View Company</a>
-                            </td> 
+                            </td>
                         </tr>
                         @endif
                         @endforeach
@@ -106,7 +106,7 @@
       <!--/row-->
       </section>
       <hr>
-    
+
       <section class="dashboard-company">
           <h4 class="card-title text-secondary">Manage Roles and Categories</h4>
           <div class="row my-4">
@@ -124,7 +124,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#role-have-permission-tab" role="tab" data-toggle="tab">Roles have permissions</a>
                     </li>
-                    
+
                 </ul>
 
                 <!-- Tab panes -->
@@ -144,7 +144,7 @@
                                     @enderror
                             </form>
                         </div>
-                      
+
                         <div class="table-responsive">
                             <table class="table table-striped">
                                 <thead class="thead-inverse">
@@ -159,16 +159,16 @@
                                     <tr>
                                         <td>{{$category->id}}</td>
                                         <td>{{$category->category_name}}</td>
-                                        <td><a class="btn secondary-btn" href="{{route('category.edit',['category'=>$category])}}">Edit</a> 
-                                            <form action="{{route('category.destroy',['id'=>$category->id])}}" id="categoryDestroyForm" class="d-inline">
+                                        <td><a class="btn secondary-btn" href="{{route('category.edit',['category'=>$category])}}">Edit</a>
+                                            <form action="{{route('category.destroy',['id'=>$category->id])}}" method="POST" class="d-inline">
                                                 @csrf
-                                                @method('delete')
-                                                <button id="categoryDestroyBtn" class="btn danger-btn">Delete</button>
+                                                @method('DELETE')
+                                                <button class="btn danger-btn categoryDestroyBtn">Delete</button>
                                             </form>
                                         </td>
                                     </tr>
                                     @endforeach
-                                
+
                                 </tbody>
                             </table>
                         </div>
@@ -210,7 +210,7 @@
                                         <tr>
                                             <td>{{$index+1}}</td>
                                             <td>{{$permission}}</td>
-                                            <td><a class="btn secondary-btn" href="">Edit</a> 
+                                            <td><a class="btn secondary-btn" href="">Edit</a>
                                             <form action="" class="d-inline"><button type="submit" class="btn danger-btn">Delete</button></form></td>
                                         </tr>
                                     @endforeach
@@ -259,14 +259,16 @@
   </div>
 @endSection
 
+
+
 @push('js')
 <script>
      $(document).ready(function(){
-        //delete category 
-        $('#categoryDestroyBtn').click(function(e){
+        $('.categoryDestroyBtn').click(function(e){
+            var selectedForm = $(this).closest('form');
             e.preventDefault();
             if(window.confirm('Are you sure you want delete the Category?')){
-                $('#categoryDestroyForm').submit();
+                selectedForm.submit();
             }
         })
     })
