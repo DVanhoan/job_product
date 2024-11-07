@@ -30,7 +30,7 @@ RUN composer install --optimize-autoloader --no-dev
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Cấu hình port cho container (nếu cần)
-EXPOSE 9000
+EXPOSE 80
 
 # Khởi động PHP-FPM
 CMD ["php-fpm"]
