@@ -34,7 +34,8 @@ COPY ./nginx.conf /etc/nginx/nginx.conf
 COPY ./supervisord.conf /etc/supervisord.conf
 
 # Expose port cho ứng dụng
-EXPOSE 80
+EXPOSE 8080
+
 
 # Lệnh khởi động
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]
