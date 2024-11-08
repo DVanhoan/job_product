@@ -12,10 +12,12 @@ RUN apk update && apk add --no-cache \
 
 # Cài đặt Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-RUN composer install
+
 
 COPY . /var/www/html/
-# Copy mã nguồn của ứng dụng vào container
+
+RUN composer install -vvv
+  # Copy mã nguồn của ứng dụng vào container
 WORKDIR /var/www/html
 # COPY . .
 
