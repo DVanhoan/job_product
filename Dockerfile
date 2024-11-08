@@ -24,7 +24,7 @@ WORKDIR /var/www/html
 # Thiết lập quyền cho thư mục storage và bootstrap/cache
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
-
+RUN docker-php-ext-install pdo_mysql
 RUN mkdir -p /var/log/php-fpm /var/log/nginx
 
 # Copy file cấu hình Nginx và Supervisor
