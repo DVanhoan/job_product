@@ -7,7 +7,7 @@ services:
             dockerfile: Dockerfile
         container_name: custom_laravel
         ports:
-            - "8080:8080"
+            - "80:80"
         environment:
             APP_ENV: ${APP_ENV}
             APP_KEY: ${APP_KEY}
