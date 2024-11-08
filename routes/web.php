@@ -33,7 +33,7 @@ Route::middleware('auth')->prefix('account')->group(function () {
     Route::get('logout', [AccountController::class, 'logout'])->name('account.logout');
     Route::get('overview', [AccountController::class, 'index'])->name('account.index');
     Route::get('deactivate', [AccountController::class, 'deactivateView'])->name('account.deactivate');
-    Route::get('change-password', [AccountController::class, 'changePasswordView'])->name('account.changePassword');
+    Route::get('change-password', [AccountController::class, 'changePasswordView'])->name('account.changePasswordview');
     Route::delete('delete', [AccountController::class, 'deleteAccount'])->name('account.delete');
     Route::put('change-password', [AccountController::class, 'changePassword'])->name('account.changePassword');
     //savedJobs
@@ -41,7 +41,7 @@ Route::middleware('auth')->prefix('account')->group(function () {
     Route::get('my-saved-jobs/{id}', [savedJobController::class, 'store'])->name('savedJob.store');
     Route::delete('my-saved-jobs/{id}', [savedJobController::class, 'destroy'])->name('savedJob.destroy');
     //applyjobs
-    Route::get('apply-job', [AccountController::class, 'applyJobView'])->name('account.applyJob');
+    Route::get('apply-job', [AccountController::class, 'applyJobView'])->name('account.applyJobView');
     Route::post('apply-job', [AccountController::class, 'applyJob'])->name('account.applyJob');
 
     //Admin Role Routes
