@@ -51,7 +51,7 @@
                       <div class="card-body">
                           <h4 class="card-title">Manage Company Details</h4>
                           <p class="mb-3 alert alert-info">For job listings you need to add Company details.</p>
-                          
+
                           <div class="mb-3 d-flex">
                             @if(!$company)
                             <a href="{{route('company.create')}}" class="btn primary-btn mr-2">Create Company</a>
@@ -115,7 +115,7 @@
                                 <td> <a href="{{route('post.show',['job'=>$post])}}" target="_blank" title="Go to this post">{{$post->job_title}}</a></td>
                                 <td>{{$post->job_level}}</td>
                                 <td>{{$post->vacancy_count}}</td>
-                                <td>@php 
+                                <td>@php
                                     $date = new DateTime($post->deadline);
                                     $timestamp =  $date->getTimestamp();
                                     $dayMonthYear = date('d/m/Y',$timestamp);
@@ -129,7 +129,7 @@
                                     @method('DELETE')
                                     <button type="submit" id="delPostBtn" class="btn danger-btn">Delete</button>
                                 </form>
-                                </td> 
+                                </td>
                             </tr>
                             @endforeach
                             @else
@@ -165,5 +165,5 @@
             }
         })
     })
-</script>    
+</script>
 @endpush

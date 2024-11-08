@@ -17,6 +17,18 @@
           </select>
         </div>
 
+        <div class="form-group">
+            <div class="py-3">
+              <p>Company Title</p>
+            </div>
+            <input type="text" placeholder="Company title" class="form-control @error('password') is-invalid @enderror" name="title" value="{{ old('title') }}" required>
+              @error('title')
+                  <span class="invalid-feedback" role="alert">
+                      <strong>{{ $message }}</strong>
+                  </span>
+              @enderror
+          </div>
+
         <div class="pb-3">
             <div class="py-3">
               <p>Company logo</p>
@@ -49,17 +61,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-          <div class="py-3">
-            <p>Company Title</p>
-          </div>
-          <input type="text" placeholder="Company title" class="form-control @error('password') is-invalid @enderror" name="title" value="{{ old('title') }}" required>
-            @error('title')
-                <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                </span>
-            @enderror
-        </div>
 
         <div class="form-group">
           <div class="py-3">

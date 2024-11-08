@@ -100,8 +100,6 @@ class CompanyController extends Controller
             if ($request->hasFile('cover_img')) {
                 $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
                 $company->cover_img = $uploadedFileUrl;
-            } else {
-                $company->cover_img = 'nocover';
             }
 
             $company->save();

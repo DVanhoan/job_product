@@ -88,7 +88,8 @@ class PostController extends Controller
 
     public function edit(Post $post)
     {
-        return view('post.edit', compact('post'));
+        $provinces = $this->getProvinces();
+        return view('post.edit', compact('post', 'provinces'));
     }
 
     public function update(Request $request, $post)
