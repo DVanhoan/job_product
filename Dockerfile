@@ -1,5 +1,5 @@
-# Sử dụng hình ảnh PHP 8 với FPM
-FROM php:8.3.9-fpm
+FROM php:8.3.9-fpm-alpine
+
 
 # Cài đặt các extension cần thiết
 RUN apt-get update && apt-get install -y \
