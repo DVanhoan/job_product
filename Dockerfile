@@ -26,6 +26,7 @@ RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cac
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN docker-php-ext-install pdo_mysql
 RUN mkdir -p /var/log/php-fpm /var/log/nginx
+RUN chmod -R 775 /var/www/html/public
 
 # Copy file cấu hình Nginx và Supervisor
 COPY ./nginx.conf /etc/nginx/nginx.conf
