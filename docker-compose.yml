@@ -21,7 +21,7 @@ services:
             DB_PASSWORD: ${DB_PASSWORD}
             JWT_SECRET: ${JWT_SECRET}
         volumes:
-            - .:/var/www
+            - .:/var/www/html
         depends_on:
             - db
 
