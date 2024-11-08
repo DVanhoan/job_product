@@ -7,6 +7,7 @@ RUN apt-get update && apt-get install -y \
     libjpeg-dev \
     libfreetype6-dev \
     nginx \
+    supervisor \
     && docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install gd
 
@@ -24,9 +25,11 @@ RUN mkdir -p /var/log/php-fpm /var/log/nginx
 
 # Copy file cấu hình Nginx
 COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY ./supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Mở cổng 80
 EXPOSE 80
 
 # Start Nginx và PHP-FPM
-CMD service nginx start && php-fpm
+# CMD service nginx start && php-fpm
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
