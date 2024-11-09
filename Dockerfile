@@ -8,7 +8,6 @@ RUN apt-get update -y && \
 
 RUN docker-php-ext-install pdo pdo_mysql bcmath
 
-RUN echo "extension=redis.so" >> /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
 RUN pecl install -o -f redis && \
     rm -rf /tmp/pear && \
@@ -16,7 +15,6 @@ RUN pecl install -o -f redis && \
 
 
 WORKDIR /var/www
-COPY ./php.ini /usr/local/etc/php/
 COPY . .
 
 
