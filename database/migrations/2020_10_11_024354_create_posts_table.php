@@ -25,7 +25,7 @@ class CreatePostsTable extends Migration
             $table->timestamp('deadline');
             $table->string('education_level');
             $table->string('experience');
-            $table->string('skills');
+            $table->string('skills', 2400);
             $table->text('specifications');
             $table->unsignedMediumInteger('views')->default(1);
             $table->timestamps();
