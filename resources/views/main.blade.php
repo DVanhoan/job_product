@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="container">
-
+        <h1>Main</h1>
     </div>
 
     <script src="{{asset('js/app.js')}}"></script>
