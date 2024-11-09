@@ -38,13 +38,20 @@ class AuthorController extends Controller
 
     // Author Employer panel
     //employer is company of author
-    public function employer($employer)
+    public function employer($id)
     {
-        $company = Company::find($employer)->with('posts')->first();
+        $company = Company::with('posts')->find($id);
+
+        if (!$company) {
+            // Nếu không tìm thấy công ty với ID này, có thể trả về 404 hoặc xử lý lỗi khác
+            abort(404, 'Company not found');
+        }
+
         return view('account.employer')->with([
             'company' => $company,
         ]);
     }
+
 
     //check if has company
     protected function hasCompany()

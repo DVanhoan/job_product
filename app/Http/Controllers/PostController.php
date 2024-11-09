@@ -22,7 +22,7 @@ class PostController extends Controller
     {
         $posts = Post::latest()->take(20)->with('company')->get();
         $categories = CompanyCategory::take(5)->get();
-        $topEmployers = Company::latest()->take(3)->get();
+        $topEmployers = Company::latest()->take(6)->get();
         return view('home')->with([
             'posts' => $posts,
             'categories' => $categories,

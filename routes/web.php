@@ -16,35 +16,34 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('post.index');
 Route::get('/job/{job}', [PostController::class, 'show'])->name('post.show');
-Route::get('employer/{employer}', [AuthorController::class, 'employer'])->name('account.employer');
+Route::get('employer/{id}', [AuthorController::class, 'employer'])->name('account.employer');
 
 
 Route::get('/search', [JobController::class, 'index'])->name('job.index');
-// Route::get('company-categories', [JobController::class, 'getCategories'])->name('job.getCategories');
 Route::get('job-titles', [JobController::class, 'getAllByTitle'])->name('job.getAllByTitle');
 Route::get('companies', [JobController::class, 'getAllOrganization'])->name('job.getAllOrganization');
 
-//auth routes
+
 Route::middleware('auth')->prefix('account')->group(function () {
 
     Route::post('/update-profile-image', [AccountController::class, 'updateProfile'])->name('account.updateProfileImage');
 
-    //every auth routes AccountController
+
     Route::get('logout', [AccountController::class, 'logout'])->name('account.logout');
     Route::get('overview', [AccountController::class, 'index'])->name('account.index');
     Route::get('deactivate', [AccountController::class, 'deactivateView'])->name('account.deactivate');
     Route::get('change-password', [AccountController::class, 'changePasswordView'])->name('account.changePasswordview');
     Route::delete('delete', [AccountController::class, 'deleteAccount'])->name('account.delete');
     Route::put('change-password', [AccountController::class, 'changePassword'])->name('account.changePassword');
-    //savedJobs
+
     Route::get('my-saved-jobs', [savedJobController::class, 'index'])->name('savedJob.index');
     Route::get('my-saved-jobs/{id}', [savedJobController::class, 'store'])->name('savedJob.store');
     Route::delete('my-saved-jobs/{id}', [savedJobController::class, 'destroy'])->name('savedJob.destroy');
-    //applyjobs
+
     Route::get('apply-job', [AccountController::class, 'applyJobView'])->name('account.applyJobView');
     Route::post('apply-job', [AccountController::class, 'applyJob'])->name('account.applyJob');
 
-    //Admin Role Routes
+
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('dashboard', [AdminController::class, 'dashboard'])->name('account.dashboard');
         Route::get('view-all-users', [AdminController::class, 'viewAllUsers'])->name('account.viewAllUsers');
@@ -56,7 +55,7 @@ Route::middleware('auth')->prefix('account')->group(function () {
         Route::delete('category/{id}', [CompanyCategoryController::class, 'destroy'])->name('category.destroy');
     });
 
-    //Author Role Routes
+
     Route::group(['middleware' => ['role:author']], function () {
         Route::get('author-section', [AuthorController::class, 'authorSection'])->name('account.authorSection');
 
@@ -77,9 +76,12 @@ Route::middleware('auth')->prefix('account')->group(function () {
         Route::delete('company', [CompanyController::class, 'destroy'])->name('company.destroy');
     });
 
-    //User Role routes
+
     Route::group(['middleware' => ['role:user']], function () {
         Route::get('become-employer', [AccountController::class, 'becomeEmployerView'])->name('account.becomeEmployer');
         Route::post('become-employer', [AccountController::class, 'becomeEmployer'])->name('account.becomeEmployer');
     });
+});
+Route::get('hello', function () {
+    return view('main');
 });

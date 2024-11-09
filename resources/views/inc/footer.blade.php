@@ -2,8 +2,14 @@
     <footer class="container mx-auto row px-5">
         {{-- Logo và giới thiệu --}}
         <div class="col-12 col-md-4 mb-4 text-center text-md-start">
-            <img src="{{ asset('Logo.svg') }}" alt="logo" class="invert img-fluid mx-auto d-block d-md-inline-block">
-            <p class="text-muted mt-3">Build a modern and creative website with crealand</p>
+            <img
+                src="{{ asset('Logo.svg') }}"
+                alt="logo"
+                class="invert img-fluid mx-auto d-block d-md-inline-block"
+            />
+            <p class="text-muted mt-3">
+                Build a modern and creative website with crealand
+            </p>
             <ul class="list-inline mt-4">
                 <li class="list-inline-item">
                     <a href="/" class="text-secondary">
@@ -80,10 +86,14 @@
 
         {{-- Dòng bản quyền --}}
         <div class="col-12 text-center mt-5">
-            <div class="bg-primary text-white p-3 rounded-circle d-inline-block">
+            <div
+                class="bg-primary text-white p-3 rounded-circle d-inline-block"
+            >
                 <i class="fas fa-heart fa-lg"></i>
             </div>
-            <p class="mt-3 font-weight-bold text-muted">Copyright © 2023. Crafted with love.</p>
+            <p class="mt-3 font-weight-bold text-muted">
+                Copyright © 2023. Crafted with love.
+            </p>
         </div>
     </footer>
 </section>
