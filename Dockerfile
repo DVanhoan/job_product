@@ -22,4 +22,4 @@ COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
 
 
 ENV PORT=8000
-ENTRYPOINT [ "docker/entrypoint.sh" ]
+CMD ["sh", "docker/entrypoint.sh"]
