@@ -1,13 +1,13 @@
 #!/bin/bash
 # Echo các biến môi trường để kiểm tra
-echo "Environment variables:"
-echo "APP_ENV: $APP_ENV"
-echo "DB_CONNECTION: $DB_CONNECTION"
-echo "DB_HOST: $DB_HOST"
-echo "DB_DATABASE: $DB_DATABASE"
-echo "DB_USERNAME: $DB_USERNAME"
-echo "DB_PASSWORD: $DB_PASSWORD"
-echo "DB_PORT: $DB_PORT"
+echo "APP_ENV: $APP_ENV" >> /tmp/deploy.log
+echo "DB_CONNECTION: $DB_CONNECTION" >> /tmp/deploy.log
+echo "DB_HOST: $DB_HOST" >> /tmp/deploy.log
+echo "DB_DATABASE: $DB_DATABASE" >> /tmp/deploy.log
+echo "DB_USERNAME: $DB_USERNAME" >> /tmp/deploy.log
+echo "DB_PASSWORD: $DB_PASSWORD" >> /tmp/deploy.log
+echo "DB_PORT: $DB_PORT" >> /tmp/deploy.log
+
 
 if [ ! -f "vendor/autoload.php" ]; then
     composer install --no-progress --no-interaction
