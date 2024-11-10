@@ -35,7 +35,7 @@
                                     </td>
                                     <td>
                                         <a
-                                            href="{{ route('account.employer', ['employer' => $post->company]) }}"
+                                            href="{{ route('account.employer', ['id' => $post->company->id]) }}"
                                         >
                                             {{ substr($post->company->title, 0, 14) }}..
                                         </a>

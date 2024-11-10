@@ -22,8 +22,8 @@ Route::get('login/github', function () {
 })->name('login.github');
 
 Route::get('/login/github/callback', function () {
-    $github_user = Socialite::driver('github')->user();
-    $user = User::where("github_id", $github_user->id)->first();
+    $github_user = Socialite::driver('github')->stateless()->user();
+    $user = User::where("github_id", $github_user->id)->orWhere('email', $github_user->getEmail())->first();
 
     if ($user) {
         auth()->login($user, true);
@@ -48,8 +48,8 @@ Route::get('login/google', function () {
 })->name('login.google');
 
 Route::get('/login/google/callback', function () {
-    $google_user = Socialite::driver('google')->user();
-    $user = User::where("google_id", $google_user->id)->first();
+    $google_user = Socialite::driver('google')->stateless()->user();
+    $user = User::where("google_id", $google_user->id)->orWhere('email', $google_user->getEmail())->first();
     // dd($user);
 
     if ($user) {

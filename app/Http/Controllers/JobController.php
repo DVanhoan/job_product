@@ -46,7 +46,7 @@ class JobController extends Controller
             $posts = $posts->where('job_location', 'LIKE', '%' . $request->job_location . '%');
         }
 
-        $posts = $posts->has('company')->with('company')->paginate(6);
+        $posts = $posts->has('company')->with('company')->orderBy('views', 'desc')->paginate(6);
 
         return view('job.index', compact('posts', 'categories', 'provinces'));
     }

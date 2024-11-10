@@ -5,8 +5,6 @@
 /vendor
 .env
 .env.backup
-/Dockerfile
-/docker-compose.yml
 .phpunit.result.cache
 docker-compose.override.yml
 Homestead.json
@@ -17,4 +15,4 @@ yarn-error.log
 /.vscode
 
 .vercel
-/Docker/entrypoint.sh
+
