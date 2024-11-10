@@ -7,14 +7,15 @@ services:
             context: .
             target: php
             args:
-                - APP_ENV=${APP_ENV}
+                - APP_ENV=production
         environment:
-            - APP_ENV=${APP_ENV}
+            - APP_ENV=production
             - CONTAINER_ROLE=app
             - DB_HOST=database
-            - DB_DATABASE=${DB_DATABASE}
-            - DB_USERNAME=${DB_USERNAME}
-            - DB_PASSWORD=${DB_PASSWORD}
+            - DB_DATABASE=cuoiky
+            - DB_USERNAME=main
+            - DB_PASSWORD=1234
+            - DB_PORT=3306
         working_dir: /var/www
         volumes:
             - ./:/var/www
@@ -30,10 +31,10 @@ services:
         ports:
             - 3306:3306
         environment:
-            - MYSQL_DATABASE=${DB_DATABASE}
-            - MYSQL_USER=${DB_USERNAME}
-            - MYSQL_PASSWORD=${DB_PASSWORD}
-            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
+            - MYSQL_DATABASE=cuoiky
+            - MYSQL_USER=main
+            - MYSQL_PASSWORD=1234
+            - MYSQL_ROOT_PASSWORD=1234
         volumes:
             - db-data:/var/lib/mysql
 

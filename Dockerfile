@@ -1,4 +1,3 @@
-
 FROM php:8.3.9 as php
 
 RUN apt-get update -y && \
