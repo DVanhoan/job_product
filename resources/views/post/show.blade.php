@@ -52,11 +52,6 @@
                                     </a>
                                 </div>
                             </div>
-
-                            {{-- company information --}}
-                            <div class="p-3">
-                                <p>{{ $company->description }}</p>
-                            </div>
                         </div>
 
                         {{-- job information --}}
@@ -416,5 +411,5 @@
 @endpush
 
 @push('js')
-    
+
 @endpush

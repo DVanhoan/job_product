@@ -33,6 +33,24 @@
                 </select>
             </div>
 
+            <!-- Company Title -->
+            <div class="form-group">
+                <label for="title">Company Title</label>
+                <input
+                    type="text"
+                    placeholder="Company title"
+                    class="form-control @error('title') is-invalid @enderror"
+                    name="title"
+                    value="{{ old('title') ?? $company->title }}"
+                    required
+                />
+                @error('title')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+            </div>
+
             <!-- Upload Logo -->
             <div class="pb-3">
                 <div class="py-3">
@@ -90,24 +108,6 @@
                 </div>
             </div>
 
-            <!-- Other Form Fields (Title, Website, Description) -->
-            <div class="form-group">
-                <label for="title">Company Title</label>
-                <input
-                    type="text"
-                    placeholder="Company title"
-                    class="form-control @error('title') is-invalid @enderror"
-                    name="title"
-                    value="{{ old('title') ?? $company->title }}"
-                    required
-                />
-                @error('title')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
             <div class="form-group">
                 <label for="website">Company Website Url</label>
                 <input
@@ -132,8 +132,8 @@
                     name="description"
                     required
                 >
-{{ old('description') ?? $company->description }}</textarea
-                >
+                    {{ old('description') ?? $company->description }}
+                </textarea>
                 @error('description')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

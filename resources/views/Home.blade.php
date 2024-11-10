@@ -52,8 +52,7 @@
                     <div class="col-6 col-md-4 col-lg-2 mb-4 d-flex align-items-stretch">
                         <a href="{{ route('account.employer', ['id' => $employer->id]) }}">
                         <div class="card text-center company-card shadow-sm w-100">
-                            <a
-                                href="{{ route('account.employer', ['id' => $employer->id]) }}" class="p-3">
+                            <a href="{{ route('account.employer', ['id' => $employer->id]) }}" class="p-3">
                                 <img
                                     src="{{ asset($employer->logo) }}"
                                     class="img-fluid mx-auto d-block"
@@ -61,14 +60,13 @@
                                     style="max-width: 100px; max-height: 60px"
                                 />
                             </a>
-                            <div
-                                class="card-body d-flex flex-column align-items-center"
-                            >
-                                <h5 class="card-title text-dark small mb-3">
+                            <a href="{{ route('account.employer', ['id' => $employer->id]) }}">
+                                <div class="card-body d-flex flex-column align-items-center">
+                                <h5 class="card-title  text-dark mb-3 d-flex align-items-center justify-content-center text-center" style="height: 50px;">
                                     {{ $employer->title }}
                                 </h5>
-                                <p class="btn btn-primary btn-sm mt-auto">Việc Mới</p>
                             </div>
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -105,10 +103,11 @@
                                     {{ Str::limit($post->description, 100) }}
                                 </p>
                                 <span class="badge badge-pill badge-primary">
-                                    Full-Time
+                                    {{ $post->employment_type }}
                                 </span>
                                 <span class="text-muted small float-right">
-                                    a few seconds ago
+                                    Apply Before:
+                                    {{ Str::limit($post->deadline, 10, '') }}
                                 </span>
                             </div>
                         </div>
@@ -186,5 +185,7 @@
             background-color: #6f42c1;
             color: #fff;
         }
+
+
     </style>
 @endsection

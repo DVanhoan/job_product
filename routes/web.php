@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\OauthController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Auth\AuthorController;
@@ -10,11 +11,66 @@ use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\savedJobController;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 
 
+Route::get('login/github', function () {
+    return Socialite::driver('github')->redirect();
+})->name('login.github');
 
-Route::get('/', [PostController::class, 'index'])->name('post.index');
+Route::get('/login/github/callback', function () {
+    $github_user = Socialite::driver('github')->user();
+    $user = User::where("github_id", $github_user->id)->first();
+
+    if ($user) {
+        auth()->login($user, true);
+    } else {
+        $newUser = User::create([
+            'name' => $github_user->getNickname(),
+            'email' => $github_user->getEmail(),
+            'avatar' => $github_user->getAvatar(),
+            'github_id' => $github_user->getId(),
+            'password' => Hash::make($github_user->getId()),
+        ]);
+
+        auth()->login($newUser, true);
+    }
+
+    return redirect()->route('post.index');
+});
+
+
+Route::get('login/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('login.google');
+
+Route::get('/login/google/callback', function () {
+    $google_user = Socialite::driver('google')->user();
+    $user = User::where("google_id", $google_user->id)->first();
+    // dd($user);
+
+    if ($user) {
+        auth()->login($user, true);
+    } else {
+        $newUser = User::create([
+            'name' => $google_user->getName(),
+            'email' => $google_user->getEmail(),
+            'avatar' => $google_user->getAvatar(),
+            'google_id' => $google_user->getId(),
+            'password' => Hash::make($google_user->getId()),
+        ]);
+
+        auth()->login($newUser, true);
+    }
+
+    return redirect()->route('post.index');
+});
+
+
+Route::get('/123', [PostController::class, 'index'])->name('post.index');
 Route::get('/job/{job}', [PostController::class, 'show'])->name('post.show');
 Route::get('employer/{id}', [AuthorController::class, 'employer'])->name('account.employer');
 
@@ -82,6 +138,8 @@ Route::middleware('auth')->prefix('account')->group(function () {
         Route::post('become-employer', [AccountController::class, 'becomeEmployer'])->name('account.becomeEmployer');
     });
 });
-Route::get('hello', function () {
+
+
+Route::get('/', function () {
     return view('main');
-});
+})->name('job.index');

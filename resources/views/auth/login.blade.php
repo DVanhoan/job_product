@@ -6,21 +6,19 @@
             <div class="col-sm-12 col-md-6 px-0">
                 <div class="login-container">
                     <div class="login-header mb-3">
-                        <h3>
-                            <img
-                                src="{{ asset('images/logo/joblister.png') }}"
-                                width="50px;"
-                                alt=""
-                            />
-                            Joblister Login
-                        </h3>
-                        <p class="login-header-title">
-                            Welcome back to Job lister
+                        <p class="login-header-title font-weight-bold size-20">
+                            Welcome back to Ehya
                         </p>
-                        <p class="text-muted">
+                        <p class="text-black">
                             login with your registered email & password.
                         </p>
+
+                        <a class="mr-3 col-md-6" href="{{ route('login.google') }}"><img src="{{ asset('images/google.png') }}" alt="" width="40px"></a>
+
+                        <a class="mr-3 col-md-6" href="{{ route('login.github') }}"><img src="{{ asset('images/github.png') }}" alt="" width="40px"></a>
+
                     </div>
+
                     <div class="login-form">
                         <form action="{{ route('login') }}" method="POST">
                             @csrf

@@ -120,7 +120,7 @@ class CompanyController extends Controller
             'logo' => 'required|image|max:2999',
             'category' => 'required',
             'website' => 'required|string',
-            'cover_img' => 'sometimes|image|max:3999'
+            'cover_img' => 'sometimes|image|max:3999, mimes:webg,png,jpg, jpeg, gif, svg'
         ]);
     }
     protected function validateCompanyUpdate(Request $request)
@@ -128,12 +128,13 @@ class CompanyController extends Controller
         return $request->validate([
             'title' => 'required|min:5',
             'description' => 'required|min:5',
-            'logo' => 'someiimes|image|max:2999',
+            'logo' => 'sometimes|image|max:2999',
             'category' => 'required',
             'website' => 'required|string',
-            'cover_img' => 'sometimes|image|max:3999'
+            'cover_img' => 'sometimes|image|max:3999|mimes:webp,png,jpg,jpeg,gif,svg'
         ]);
     }
+
 
     public function destroy()
     {

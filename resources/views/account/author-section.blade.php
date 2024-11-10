@@ -56,7 +56,7 @@
                             @if(!$company)
                             <a href="{{route('company.create')}}" class="btn primary-btn mr-2">Create Company</a>
                             @else
-                            <a href="{{route('company.edit')}}" class="btn secondary-btn mr-2">Edit Company</a>
+                            <a href="{{route('company.edit')}}" class="btn primary-btn mr-2">Edit Company</a>
                             <div class="ml-auto">
                                 <form action="{{route('company.destroy')}}" id="companyDestroyForm" method="POST">
                                     @csrf

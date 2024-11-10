@@ -340,15 +340,11 @@
                             @foreach ($posts as $post)
                                 <div class="card mt-3 hover-shadow">
                                     <div class="card-body">
-                                        <div
-                                            class="row align-items-center text-center text-lg-left"
-                                        >
-                                            <div
-                                                class="col-xs-4 col-sm-4 col-md-3 col-lg-3 pt-2 mx-auto"
-                                            >
+                                        <div class="row align-items-center text-center text-lg-left">
+                                            <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3  mx-auto">
                                                 <img
-                                                    class="border p-2 img-fluid"
-                                                    src="/{{ $post->company->logo }}"
+                                                    class=" img-fluid"
+                                                    src="{{ $post->company->logo }}"
                                                     width="100px"
                                                 />
                                             </div>
@@ -396,7 +392,7 @@
                                             <span class="text-muted">
                                                 <i class="fas fa-clock"></i>
                                                 Apply Before:
-                                                {{ \Illuminate\Support\Str::limit($post->deadline, 10, '') }}
+                                                {{ Str::limit($post->deadline, 10, '') }}
                                             </span>
                                         </div>
                                         <div class="d-inline float-right">

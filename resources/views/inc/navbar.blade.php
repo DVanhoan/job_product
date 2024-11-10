@@ -33,7 +33,7 @@
           </li>
           @endauth
           @guest
-          <a href="/login" class="btn primary-btn">Sign up or Log in</a>
+          <a href="/login" class="btn btn-primary">Sign up or Log in</a>
           @endguest
         </ul>
       </div>
