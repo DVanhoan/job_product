@@ -70,7 +70,7 @@ Route::get('/login/google/callback', function () {
 });
 
 
-Route::get('/123', [PostController::class, 'index'])->name('post.index');
+Route::get('/', [PostController::class, 'index'])->name('post.index');
 Route::get('/job/{job}', [PostController::class, 'show'])->name('post.show');
 Route::get('employer/{id}', [AuthorController::class, 'employer'])->name('account.employer');
 
@@ -138,8 +138,3 @@ Route::middleware('auth')->prefix('account')->group(function () {
         Route::post('become-employer', [AccountController::class, 'becomeEmployer'])->name('account.becomeEmployer');
     });
 });
-
-
-Route::get('/', function () {
-    return view('main');
-})->name('job.index');
