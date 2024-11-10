@@ -11,6 +11,14 @@ else
     echo "Env file already exists"
 fi
 
+until nc -z -v -w30 "${DB_HOST:-database}" 3306
+do
+  echo "Waiting for database connection..."
+  sleep 1
+done
+
+echo "Database is up, proceeding with Laravel setup..."
+
 php artisan key:generate
 php artisan migrate --force
 php artisan cache:clear
