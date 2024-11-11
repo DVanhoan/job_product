@@ -97,3 +97,9 @@
         </div>
     </footer>
 </section>
+
+
+<!-- Nút cuộn lên đầu trang -->
+<button onclick="scrollToTop()" id="scrollToTopBtn" class="scroll-to-top">
+    <i class="fas fa-arrow-up"></i>
+</button>

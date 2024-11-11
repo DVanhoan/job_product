@@ -4472,3 +4472,22 @@
     );
 });
 //# sourceMappingURL=bootstrap.bundle.min.js.map
+
+
+
+
+// Hiển thị nút khi cuộn xuống
+window.onscroll = function () {
+    const scrollToTopBtn = document.getElementById("scrollToTopBtn");
+    if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        scrollToTopBtn.style.display = "block";
+    } else {
+        scrollToTopBtn.style.display = "none";
+    }
+};
+
+// Hàm để cuộn lên đầu trang
+function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+}
+

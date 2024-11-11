@@ -2,7 +2,6 @@
 
 @section('content')
 <div class="employer-content border">
-    {{-- <div class="container-fluid p-3"> --}}
     <div class="card">
         <div class="card-header">
             <h4 class="card-title text-secondary">Opening Jobs</h4>
@@ -10,8 +9,11 @@
         <div class="card-body">
             @foreach ($company->posts as $post)
                 <div class="row mb-4 hover-shadow pb-2 pt-4">
+
                     <div class="d-none d-md-block col-md-3">
+                        <a href="{{ route('post.show', ['job' => $post]) }}">
                         <div class="border p-2 d-flex align-items-center">
+
                             <img
                                 src="{{ asset($company->logo) }}"
                                 class="img-fluid"

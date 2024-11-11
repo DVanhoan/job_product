@@ -41,7 +41,7 @@
                   {{$post->job_title}}
                 </p>
                 <h6 class="text-uppercase">
-                  <a href="{{route('account.employer',['employer'=>$company])}}">{{$company->title}}</a>
+                  <a href="{{route('account.employer',['id'=>$company->id])}}">{{$company->title}}</a>
                 </h6>
                 <p class="my-2"><i class="fas fa-map-marker-alt"></i> Location: {{$post->job_location}}</p>
                 <p class="text-danger small">{{date('l, jS \of F Y',$post->deadlineTimestamp())}}, ({{ date('d',$post->remainingDays())}} days from now)</p>

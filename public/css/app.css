@@ -12307,11 +12307,10 @@ button {
 
 .home-page {
     padding: 2rem;
-    background: url("https://img.daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.webp")
-        no-repeat center center fixed;
+    background: url("https://images.pexels.com/photos/5833241/pexels-photo-5833241.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1");
     background-size: cover;
     background-position: center;
-    min-height: 40vh; /* Tăng chiều cao tối thiểu lên toàn màn hình */
+    min-height: 60vh;
     display: flex;
     align-items: center;
     color: #fff;
@@ -12404,9 +12403,10 @@ button {
 }
 
 .login-container .login-header .login-header-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
 }
+
 
 .login-poster {
     padding: 1rem 2rem;
@@ -12421,6 +12421,37 @@ button {
     font-family: Georgia, "Times New Roman", Times, serif;
     line-height: 1.3;
 }
+
+
+
+.register-container {
+    padding: 3rem 2rem;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: #666;
+    height: 100%;
+}
+
+.register-container .register-header .register-header-title {
+    font-size: 1.4rem;
+    font-weight: bold;
+}
+
+
+.register-poster {
+    padding: 1rem 2rem;
+    height: 100%;
+    min-height: 500px;
+    text-shadow: 1px 1px 5px 8px rgba(0, 0, 0, 0.4);
+}
+
+.register-poster .slogon {
+    font-size: 2rem;
+    color: white;
+    font-family: Georgia, "Times New Roman", Times, serif;
+    line-height: 1.3;
+}
+
 
 .dashboard-card {
     overflow: hidden;
@@ -12456,4 +12487,23 @@ button {
 
 .account-layout .account-bdy .list-group-item.active .account-nav-link:hover {
     color: #efefef;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 10px 15px;
+    font-size: 24px;
+    display: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.scroll-to-top:hover {
+    background-color: #0056b3;
 }

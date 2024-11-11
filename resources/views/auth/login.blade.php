@@ -5,21 +5,14 @@
         <div class="row justify-content-center">
             <div class="col-sm-12 col-md-6 px-0">
                 <div class="login-container">
-                    <div class="login-header mb-3">
+                    <div class="login-header mb-4 text-center">
                         <p class="login-header-title font-weight-bold size-20">
                             Welcome back to Ehya
                         </p>
-                        <p class="text-black">
-                            login with your registered email & password.
-                        </p>
-
-                        <a class="mr-3 col-md-6" href="{{ route('login.google') }}"><img src="{{ asset('images/google.png') }}" alt="" width="40px"></a>
-
-                        <a class="mr-3 col-md-6" href="{{ route('login.github') }}"><img src="{{ asset('images/github.png') }}" alt="" width="40px"></a>
-
                     </div>
 
-                    <div class="login-form">
+
+                    <div class="login-form px-2 pt-4">
                         <form action="{{ route('login') }}" method="POST">
                             @csrf
                             <div class="form-group">
@@ -82,20 +75,21 @@
                                     @enderror
                                 </div>
                             </div>
-                            <div class="form-group mb-0">
-                                <input
-                                    type="checkbox"
-                                    id="rememberMe"
-                                    name="remember"
-                                    {{ old('remember') ? 'checked' : '' }}
-                                />
-                                <label for="rememberMe">Remember me</label>
-                            </div>
-                            <div class="form-group">
+                            <div class="form-group d-flex justify-content-between align-items-center mb-3">
+                                <div>
+                                    <input
+                                        type="checkbox"
+                                        id="rememberMe"
+                                        name="remember"
+                                        {{ old('remember') ? 'checked' : '' }}
+                                    />
+                                    <label for="rememberMe" class="mb-0">Remember me</label>
+                                </div>
                                 <a href="#" class="secondary-link">
                                     Forgot password?
                                 </a>
                             </div>
+
                             <button
                                 type="submit"
                                 class="btn primary-btn btn-block"
@@ -103,27 +97,33 @@
                                 Login
                             </button>
                         </form>
+
                         <div class="my-3">
-                            <p>
+                            <p class="text-center">or</p>
+                        </div>
+
+                        <div class="d-flex justify-content-center mb-3 mt-3">
+                            <a href="{{ route('login.google') }}" class="btn btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center mx-2">
+                                <img src="{{ asset('images/google.png') }}" alt="Google Login" width="30px">
+                            </a>
+                            <a href="{{ route('login.github') }}" class="btn btn-outline-secondary rounded-circle p-2 d-flex align-items-center justify-content-center mx-2">
+                                <img src="{{ asset('images/github.png') }}" alt="GitHub Login" width="30px">
+                            </a>
+                        </div>
+
+                        <div class="my-3">
+                            <p class="text-center">
                                 Don't have an account?
-                                <a href="/register">Register now</a>
+                                <a class="text-primary" href="/register">Register now</a>
                             </p>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="col-sm-12 col-md-6 px-0">
                 <div class="login-poster">
-                    {{-- <img src="" alt=""> --}}
-                    <h2 class="mb-3 slogon">
-                        Mark yourself as
-                        <br />
-                        Actively Job seeker
-                    </h2>
-                    <p class="text-white lead">
-                        We have enabled this feature targeting superheros who
-                        lost their jobs during this crisis.
-                    </p>
+
                 </div>
             </div>
         </div>
