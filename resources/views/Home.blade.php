@@ -4,7 +4,7 @@
     {{-- header --}}
     <section class="home-page pt-4">
         <div class="container">
-            <form action="{{ route('job.index') }}" method="GET">
+            <form action="{{ route('job.index', [], true) }}" method="GET">
                 <div class="row">
                     <div class="col-md-6">
                         <div class="px-4">

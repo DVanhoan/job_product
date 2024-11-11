@@ -340,8 +340,11 @@
                             @foreach ($posts as $post)
                                 <div class="card mt-3 hover-shadow">
                                     <div class="card-body">
+
                                         <div class="row align-items-center text-center text-lg-left">
+
                                             <div class="col-xs-4 col-sm-4 col-md-3 col-lg-3  mx-auto">
+                                                <a href="/job/{{ $post->id }}-{{ $post->job_title }} " target="_blank">
                                                 <img
                                                     class=" img-fluid"
                                                     src="{{ $post->company->logo }}"
