@@ -91,7 +91,7 @@
                                             </td>
                                             <td>
                                                 <a
-                                                    href="{{ route('account.employer', ['employer' => $author->company]) }}"
+                                                    href="{{ route('account.employer', ['id' => $author->company->id]) }}"
                                                     class="btn primary-btn"
                                                 >
                                                     View Company
