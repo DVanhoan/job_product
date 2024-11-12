@@ -21,6 +21,21 @@ class UserSeeder extends Seeder
         // Danh sách các user mới
         $factoryUsers = [
             [
+                'name' => 'admin user',
+                'email' => 'admin@admin.com',
+                'password' => '$2y$10$83E/msQKfCozQwPZqGjHb.2NbB1N7vRUMGtqp9aMoCzSRLXso0HBi', // password
+                'role' => 'admin',
+                'avatar' => 'https://res.cloudinary.com/dfac3tvue/image/upload/v1731075452/ezo3knci4lcyk7mslgxn.png'
+            ],
+
+            [
+                'name' => 'author user',
+                'email' => 'author@author.com',
+                'password' => '$2y$10$83E/msQKfCozQwPZqGjHb.2NbB1N7vRUMGtqp9aMoCzSRLXso0HBi', // password
+                'role' => 'author',
+                'avatar' => 'https://res.cloudinary.com/dfac3tvue/image/upload/v1731075452/ezo3knci4lcyk7mslgxn.png'
+            ],
+            [
                 'name' => 'Hoang An',
                 'email' => 'an@gmail.com',
                 'password' => '$2y$10$I1AcOAGWbjR1WoNuBCCcZOVUwatWF29LN0jzpiLIJ2FAunp/9dxWu',
