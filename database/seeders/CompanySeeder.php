@@ -50,7 +50,7 @@ class CompanySeeder extends Seeder
                 'user_id' => 8,
                 'company_category_id' => 1,
                 'logo' => 'https://res.cloudinary.com/dfac3tvue/image/upload/v1731150617/dbt0kestyjodfhcrcmrp.jpg',
-                'name' => 'Google',
+                'title' => 'Google',
                 'description' => 'Chào mừng bạn đến với Google - một trong những công ty công nghệ hàng đầu thế giới...',
                 'website' => 'https://www.google.com.vn/',
                 'cover_img' => 'https://res.cloudinary.com/dfac3tvue/image/upload/v1731150618/rqz5wedavt4tp6zdyqaw.jpg',
