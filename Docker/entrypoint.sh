@@ -12,7 +12,6 @@ else
 fi
 
 php artisan key:generate
-php artisan db:wipe --force
 php artisan migrate --force
 php artisan db:seed --force
 php artisan cache:clear

@@ -56,6 +56,7 @@
                                     <option value="Entry level">
                                         Entry level
                                     </option>
+                                    <option value="Junior level">Junior level</option>
                                 </select>
                             </div>
                             <div class="col-md-6">
