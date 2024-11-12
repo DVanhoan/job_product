@@ -16,6 +16,8 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
+        Company::truncate();
+        Post::truncate();
         $companies = [
             [
                 'user_id' => 2,
@@ -159,18 +161,18 @@ class CompanySeeder extends Seeder
         for ($i = 0; $i < $postCount; $i++) {
             Post::create([
                 'job_title' => $jobTitles[array_rand($jobTitles)],
-                'level' => $levels[array_rand($levels)],
+                'job_level' => $levels[array_rand($levels)],
                 'vacancy_count' => $vacancyCount,
                 'deadline' => $deadline,
                 'employment_type' => $employments[array_rand($employments)],
-                'education' => $educations[array_rand($educations)],
+                'education_level' => $educations[array_rand($educations)],
                 'salary' => $salaries[array_rand($salaries)],
-                'location' => $locations[array_rand($locations)],
+                'job_location' => $locations[array_rand($locations)],
                 'company_id' => $company->id,
                 'skills' => $skills,
                 'experience' => $experiences[array_rand($experiences)],
                 'specifications' => $decription,
-                'view' => rand(1, 10000),
+                'views' => rand(1, 10000),
             ]);
         }
     }
