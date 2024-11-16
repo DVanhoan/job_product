@@ -290,7 +290,7 @@
                                             </div>
                                             <div class="job-desc col-8">
                                                 <a
-                                                    href="{{ route('post.show', ['job' => $post]) }}"
+                                                    href="{{ route('post.show', ['job' => $job]) }}"
                                                     class="job-category text-muted font-weight-bold"
                                                 >
                                                     <p class="text-muted h6">
