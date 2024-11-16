@@ -76,21 +76,17 @@ class PostController extends Controller
 
     public function show($id)
     {
-        $post = Post::with('company:id,name,logo,company_category_id')->findOrFail($id);
+        $post = Post::findOrFail($id);
 
         event(new PostViewEvent($post));
+        $company = $post->company()->first();
 
-        $similarPosts = Post::with('company:id,name,logo')
-            ->whereHas('company', function ($query) use ($post) {
-                $query->where('company_category_id', $post->company->company_category_id);
-            })
-            ->where('id', '<>', $post->id)
-            ->take(5)
-            ->get();
-
-        return view('post.show', [
+        $similarPosts = Post::whereHas('company', function ($query) use ($company) {
+            return $query->where('company_category_id', $company->company_category_id);
+        })->where('id', '<>', $post->id)->with('company')->take(5)->get();
+        return view('post.show')->with([
             'post' => $post,
-            'company' => $post->company,
+            'company' => $company,
             'similarJobs' => $similarPosts
         ]);
     }
