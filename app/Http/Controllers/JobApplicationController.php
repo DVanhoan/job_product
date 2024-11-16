@@ -11,40 +11,39 @@ class JobApplicationController extends Controller
 {
     public function index()
     {
-        $applicationsWithPostAndUser = null;
+        $applicationsWithPostAndUser = collect();
         $company = auth()->user()->company;
 
         if ($company) {
-            $ids =  $company->posts()->pluck('id');
-            $applications = JobApplication::whereIn('post_id', $ids);
-            $applicationsWithPostAndUser = $applications->with('user', 'post')->latest()->paginate(10);
+            $postIds = $company->posts()->pluck('id');
+            $applicationsWithPostAndUser = JobApplication::whereIn('post_id', $postIds)
+                ->with(['user:id,name,email', 'post:id,job_title'])
+                ->latest()
+                ->paginate(10);
         }
 
-        return view('job-application.index')->with([
-            'applications' => $applicationsWithPostAndUser,
-        ]);
+        return view('job-application.index', compact('applicationsWithPostAndUser'));
     }
+
     public function show($id)
     {
-        $application = JobApplication::find($id);
+        $application = JobApplication::with(['post.company', 'user'])->findOrFail($id);
 
-        $post = $application->post()->first();
-        $userId = $application->user_id;
-        $applicant = User::find($userId);
-
-        $company = $post->company()->first();
-        return view('job-application.show')->with([
-            'applicant' => $applicant,
-            'post' => $post,
-            'company' => $company,
+        return view('job-application.show', [
+            'applicant' => $application->user,
+            'post' => $application->post,
+            'company' => $application->post->company,
             'application' => $application
         ]);
     }
+
     public function destroy(Request $request)
     {
-        $application = JobApplication::find($request->application_id);
+        $application = JobApplication::findOrFail($request->application_id);
         $application->delete();
-        Alert::toast('Company deleleted', 'warning');
+
+        Alert::toast('Application deleted successfully', 'success');
         return redirect()->route('jobApplication.index');
     }
+
 }

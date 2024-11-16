@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Company;
 use App\Models\Post;
 use Illuminate\Support\Facades\DB;
+use App\Services\ProvinceService;
 
 class CompanySeeder extends Seeder
 {
@@ -16,8 +17,6 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        Company::truncate();
-        Post::truncate();
         $companies = [
             [
                 'user_id' => 2,
@@ -99,6 +98,8 @@ class CompanySeeder extends Seeder
         ]);
     }
 
+
+
     /**
      * Create posts for a given company
      *
@@ -128,12 +129,17 @@ class CompanySeeder extends Seeder
             'Cloud Engineer',
         ];
 
-
+        $locations = ProvinceService::getProvinces();
+        if ($locations && isset($locations['results'])) {
+            $locations = array_column($locations['results'], 'province_name');
+        } else {
+            $locations = ['Unknown'];
+        }
 
         $levels = ['Junior level', 'Mid level', 'Senior level', 'Top level', 'Entry level'];
         $employments = ['Full Time', 'Part Time', 'Tnternship', 'Trainneship', 'Volunter', 'Freelance'];
         $educations = ['Bachelors', 'Masters', 'SEE Mid School', 'High School', 'Other'];
-        $locations = ['Da Nang, Hai Phong', 'Hanoi, Vietnam', 'Ho Chi Minh City, Vietnam', 'New York, USA'];
+
         $salaries = ['20k - 50k', '50k - 100k', '100k - 150k'];
         $vacancyCount = rand(1, 20);
         $deadline = date("Y-m-d H:i:s", strtotime(date("Y-m-d H:i:s") . " +2 days"));
@@ -141,19 +147,37 @@ class CompanySeeder extends Seeder
         $experiences = ['1 year', '2 years', '3 years', 'More than 5+ year'];
 
 
-        $decription = '<h3>Mô tả công việc:</h3><p>Chúng tôi đang tìm kiếm một Senior Node.js
-                        Developer tài năng và giàu kinh nghiệm để gia nhập đội ngũ của mình.
-                        Bạn sẽ chịu trách nhiệm xây dựng và phát triển các ứng dụng backend
-                        mạnh mẽ, hiệu suất cao, tập trung vào việc cung cấp trải nghiệm người dùng tối ưu.
-                        Vị trí này đòi hỏi kỹ năng kỹ thuật vững vàng và khả năng làm việc độc lập cũng như theo nhóm.
-                        </p><h3>Nhiệm vụ chính:</h3><ul><li>Thiết kế, phát triển và triển khai các ứng dụng backend sử dụng Node.js.
-                        </li><li>Tối ưu hóa hiệu suất ứng dụng và cải thiện tính bảo mật của hệ thống.</li><li>
-                        Tạo và duy trì RESTful APIs cũng như GraphQL APIs để kết nối giữa các thành phần của ứng dụng.</li>
-                        <li>Làm việc cùng các bộ phận khác như frontend, product, và thiết kế để hiểu và đáp ứng yêu cầu người dùng.<
-                        /li><li>Quản lý database và tối ưu hóa truy vấn để đảm bảo hệ thống hoạt động ổn định
-                        .</li><li>Thực hiện các bài kiểm tra tự động (unit test, integration test) và code review để
-                        đảm bảo chất lượng mã nguồn.</li><li>Định hướng và hướng dẫn các thành viên khác trong nhóm về kỹ
-                        thuật cũng như các best practices.</li></ul><p><br></p>';
+        $decription =   '<h3 class="font-weight-bold text-dark">Mô tả công việc:</h3>
+                        <p class="text-secondary">
+                            Chúng tôi đang tìm kiếm một Senior Node.js Developer tài năng và giàu kinh nghiệm để gia nhập đội ngũ của mình.
+                            Bạn sẽ chịu trách nhiệm xây dựng và phát triển các ứng dụng backend mạnh mẽ, hiệu suất cao, tập trung vào việc cung cấp trải nghiệm người dùng tối ưu.
+                            Vị trí này đòi hỏi kỹ năng kỹ thuật vững vàng và khả năng làm việc độc lập cũng như theo nhóm.
+                        </p>
+
+                        <h3 class="font-weight-bold text-dark mt-4">Nhiệm vụ chính:</h3>
+                        <ul class="list-unstyled pl-3 text-secondary">
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Thiết kế, phát triển và triển khai các ứng dụng backend sử dụng Node.js.
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Tối ưu hóa hiệu suất ứng dụng và cải thiện tính bảo mật của hệ thống.
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Tạo và duy trì RESTful APIs cũng như GraphQL APIs để kết nối giữa các thành phần của ứng dụng.
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Làm việc cùng các bộ phận khác như frontend, product, và thiết kế để hiểu và đáp ứng yêu cầu người dùng.
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Quản lý database và tối ưu hóa truy vấn để đảm bảo hệ thống hoạt động ổn định.
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Thực hiện các bài kiểm tra tự động (unit test, integration test) và code review để đảm bảo chất lượng mã nguồn.
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-check-circle text-primary mr-2"></i> Định hướng và hướng dẫn các thành viên khác trong nhóm về kỹ thuật cũng như các best practices.
+                            </li>
+                        </ul>';
 
 
         $postCount = rand(1, 10);

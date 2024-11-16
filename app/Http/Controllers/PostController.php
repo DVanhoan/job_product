@@ -20,9 +20,9 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::latest()->take(20)->with('company')->get();
-        $categories = CompanyCategory::take(5)->get();
-        $topEmployers = Company::latest()->take(6)->get();
+        $posts = Post::has('company')->with('company')->orderBy('views', 'desc')->paginate(12);
+        $categories = CompanyCategory::select('id', 'category_name')->take(5)->get();
+        $topEmployers = Company::select('id', 'title', 'logo')->latest()->take(6)->get();
         return view('home')->with([
             'posts' => $posts,
             'categories' => $categories,
@@ -33,15 +33,16 @@ class PostController extends Controller
     public function getProvinces()
     {
         $dataObject = $this->provinceService->getProvinces();
-        $provinces = collect($dataObject['results'])->map(function ($dataObject) {
+
+        return array_map(function ($data) {
             return (object) [
-                'id' => $dataObject['province_id'],
-                'name' => $dataObject['province_name'],
-                'type' => $dataObject['province_type']
+                'id' => $data['province_id'],
+                'name' => $data['province_name'],
+                'type' => $data['province_type']
             ];
-        })->all();
-        return $provinces;
+        }, $dataObject['results']);
     }
+
 
 
     public function create()
@@ -58,33 +59,42 @@ class PostController extends Controller
     {
         $this->requestValidate($request);
 
-        $postData = array_merge(['company_id' => auth()->user()->company->id], $request->all());
+        $postData = $request->all();
+        $postData['company_id'] = auth()->user()->company->id;
 
         $post = Post::create($postData);
+
         if ($post) {
             Alert::success('Created Post!', 'success');
             return redirect()->route('account.authorSection');
         }
+
         Alert::warning('Post failed to list!', 'warning');
         return redirect()->back();
     }
 
+
     public function show($id)
     {
-        $post = Post::findOrFail($id);
+        $post = Post::with('company:id,name,logo,company_category_id')->findOrFail($id);
 
         event(new PostViewEvent($post));
-        $company = $post->company()->first();
 
-        $similarPosts = Post::whereHas('company', function ($query) use ($company) {
-            return $query->where('company_category_id', $company->company_category_id);
-        })->where('id', '<>', $post->id)->with('company')->take(5)->get();
-        return view('post.show')->with([
+        $similarPosts = Post::with('company:id,name,logo')
+            ->whereHas('company', function ($query) use ($post) {
+                $query->where('company_category_id', $post->company->company_category_id);
+            })
+            ->where('id', '<>', $post->id)
+            ->take(5)
+            ->get();
+
+        return view('post.show', [
             'post' => $post,
-            'company' => $company,
+            'company' => $post->company,
             'similarJobs' => $similarPosts
         ]);
     }
+
 
     public function edit(Post $post)
     {
@@ -95,15 +105,18 @@ class PostController extends Controller
     public function update(Request $request, $post)
     {
         $this->requestValidate($request);
+
         $getPost = Post::findOrFail($post);
 
-        $newPost = $getPost->update($request->all());
-        if ($newPost) {
+        if ($getPost->update($request->all())) {
             Alert::success('Post successfully updated!', 'success');
             return redirect()->route('account.authorSection');
         }
+
+        Alert::error('Failed to update post!', 'error');
         return redirect()->route('post.index');
     }
+
 
     public function destroy(Post $post)
     {
@@ -117,17 +130,18 @@ class PostController extends Controller
     protected function requestValidate($request)
     {
         return $request->validate([
-            'job_title' => 'required|min:3',
-            'job_level' => 'required',
-            'vacancy_count' => 'required|int',
-            'employment_type' => 'required',
-            'job_location' => 'required',
-            'salary' => 'required',
-            'deadline' => 'required',
-            'education_level' => 'required',
-            'experience' => 'required',
-            'skills' => 'required',
-            'specifications' => 'sometimes|min:5',
+            'job_title' => 'required|string|min:3',
+            'job_level' => 'required|string',
+            'vacancy_count' => 'required|numeric',
+            'employment_type' => 'required|string',
+            'job_location' => 'required|string',
+            'salary' => 'required|numeric',
+            'deadline' => 'required|date',
+            'education_level' => 'required|string',
+            'experience' => 'required|string',
+            'skills' => 'required|string',
+            'specifications' => 'nullable|string|min:5',
         ]);
     }
+
 }

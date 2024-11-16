@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\CompanyCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use RealRashid\SweetAlert\Facades\Alert;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
@@ -13,8 +12,6 @@ class CompanyController extends Controller
 {
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
@@ -22,96 +19,83 @@ class CompanyController extends Controller
             Alert::info('You already have a company!', 'info');
             return $this->edit();
         }
-        $categories = CompanyCategory::all();
+        $categories = CompanyCategory::cache()->get();
         return response()->view('company.create', compact('categories'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         $this->validateCompany($request);
-        $company = new Company();
-        $company->user_id = auth()->user()->id;
-        $company->title = $request->title;
-        $company->description = $request->description;
-        $company->company_category_id = $request->category;
-        $company->website = $request->website;
+
+        $companyData = $request->only(['title', 'description', 'category', 'website']);
+        $companyData['user_id'] = auth()->user()->id;
 
         try {
             if ($request->hasFile('logo')) {
-                $uploadedFileUrl = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
-                $company->logo = $uploadedFileUrl;
+                $companyData['logo'] = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
             }
 
             if ($request->hasFile('cover_img')) {
-                $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
-                $company->cover_img = $uploadedFileUrl;
+                $companyData['cover_img'] = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
             } else {
-                $company->cover_img = 'nocover';
+                $companyData['cover_img'] = 'nocover';
             }
 
+            Company::create($companyData);
 
-            $company->save();
-
-            Alert::success('Updated!', 'success');
+            Alert::success('Company Created!', 'success');
             return redirect()->route('account.authorSection');
         } catch (\Exception $e) {
-            Alert::error('Failed!', 'error');
+            Alert::error('Failed to create company!', 'error');
             return redirect()->route('account.authorSection');
         }
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function edit()
     {
         $company = auth()->user()->company;
-        $categories = CompanyCategory::all();
+        $categories = CompanyCategory::cache()->get();
         return response()->view('company.edit', compact('company', 'categories'));
     }
 
-
+    /**
+     * Update the specified resource in storage.
+     */
     public function update(Request $request)
     {
-
         $this->validateCompanyUpdate($request);
+
         $company = auth()->user()->company;
-        $company->user_id = auth()->user()->id;
-        $company->title = $request->title;
-        $company->description = $request->description;
-        $company->company_category_id = $request->category;
-        $company->website = $request->website;
+        $companyData = $request->only(['title', 'description', 'category', 'website']);
 
         try {
             if ($request->hasFile('logo')) {
-                $uploadedFileUrl = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
-                $company->logo = $uploadedFileUrl;
+                $companyData['logo'] = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
             }
 
             if ($request->hasFile('cover_img')) {
-                $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
-                $company->cover_img = $uploadedFileUrl;
+                $companyData['cover_img'] = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
             }
 
-            $company->save();
+            $company->update($companyData);
 
-            Alert::success('Updated!', 'success');
+            Alert::success('Company Updated!', 'success');
             return redirect()->route('account.authorSection');
         } catch (\Exception $e) {
-            Alert::error('Failed!', 'error');
+            Alert::error('Failed to update company!', 'error');
             return redirect()->route('account.authorSection');
         }
     }
 
+    /**
+     * Validate company data.
+     */
     protected function validateCompany(Request $request)
     {
         return $request->validate([
@@ -120,9 +104,13 @@ class CompanyController extends Controller
             'logo' => 'required|image|max:2999',
             'category' => 'required',
             'website' => 'required|string',
-            'cover_img' => 'sometimes|image|max:3999, mimes:webg,png,jpg, jpeg, gif, svg'
+            'cover_img' => 'sometimes|image|max:3999|mimes:webp,png,jpg,jpeg,gif,svg'
         ]);
     }
+
+    /**
+     * Validate company update data.
+     */
     protected function validateCompanyUpdate(Request $request)
     {
         return $request->validate([
@@ -135,12 +123,15 @@ class CompanyController extends Controller
         ]);
     }
 
-
+    /**
+     * Delete the company.
+     */
     public function destroy()
     {
-        if (auth()->user()->company->delete()) {
+        $company = auth()->user()->company;
+        if ($company->delete()) {
             return redirect()->route('account.authorSection');
         }
-        return redirect()->route('account.authorSection');
+        return redirect()->route('account.authorSection')->withErrors('Failed to delete company.');
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\OauthController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\AdminController;
 use App\Http\Controllers\Auth\AuthorController;
