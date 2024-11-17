@@ -20,14 +20,12 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
-        $categories = Cache::remember('categories', 3600, function () {
-            return CompanyCategory::all();
-        });
+        $categories = CompanyCategory::all();
 
         $provinces = $this->getProvinces();
 
         $posts = Post::query()
-            ->with('company') // Eager Loading để giảm số query
+            ->with('company')
             ->when($request->q, function ($query, $q) {
                 return $query->where(function ($qBuilder) use ($q) {
                     $qBuilder->where('job_title', 'LIKE', "%$q%")
@@ -52,16 +50,11 @@ class JobController extends Controller
 
     public function getProvinces()
     {
-
-        $dataObject = Cache::remember('provinces', 86400, function () {
-            return $this->provinceService->getProvinces();
-        });
-
+        $dataObject = $this->provinceService->getProvinces();
 
         if (!$dataObject || empty($dataObject['results'])) {
             return [];
         }
-
 
         $provinces = collect($dataObject['results'])->map(function ($item) {
             return (object) [
@@ -76,10 +69,7 @@ class JobController extends Controller
 
     public function getAllOrganization()
     {
-
-        $companies = Cache::remember('all_companies', 3600, function () {
-            return Company::all();
-        });
+        $companies = Company::all();
 
         return response()->json($companies);
     }

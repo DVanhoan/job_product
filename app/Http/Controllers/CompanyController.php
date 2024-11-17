@@ -19,7 +19,7 @@ class CompanyController extends Controller
             Alert::info('You already have a company!', 'info');
             return $this->edit();
         }
-        $categories = CompanyCategory::cache()->get();
+        $categories = CompanyCategory::all();
         return response()->view('company.create', compact('categories'));
     }
 

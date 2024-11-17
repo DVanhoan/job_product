@@ -118,12 +118,19 @@ class AccountController extends Controller
     public function deleteAccount()
     {
         $user = User::find(auth()->user()->id);
-        Auth::logout($user->id);
-        if ($user->delete()) {
-            Alert::toast('Your account was deleted successfully!', 'info');
-            return redirect(route('post.index'));
-        } else {
-            return view('account.deactivate');
+
+        if($user->hasRole('admin')) {
+            Alert::toast('You cannot delete your account!', 'info');
+            return redirect(route('account.dashboard'));
+        }
+        else{
+            Auth::logout();
+            if ($user->delete()) {
+                Alert::toast('Your account was deleted successfully!', 'info');
+                return redirect(route('post.index'));
+            } else {
+                return view('account.deactivate');
+            }
         }
     }
 
@@ -147,7 +154,6 @@ class AccountController extends Controller
     {
         $user = Auth::user();
 
-
         $request->validate([
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:325201',
             'phone' => 'nullable|string|max:15',
@@ -158,15 +164,11 @@ class AccountController extends Controller
                 $uploadedFileUrl = Cloudinary::uploadFile($request->file('profile_image')->getRealPath())->getSecurePath();
                 $user->avatar = $uploadedFileUrl;
             }
-
             $user->save();
-
-
 
             Alert::success('Updated ', 'Success Message');
             return redirect(route('account.index'));
         } catch (\Exception $e) {
-
             Alert::error('Failed', 'Error Message');
             return redirect()->back();
         }

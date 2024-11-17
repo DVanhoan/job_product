@@ -34,7 +34,7 @@ Route::get('/login/github/callback', function () {
             'github_id' => $github_user->getId(),
             'password' => Hash::make($github_user->getId()),
         ]);
-
+        $newUser->assignRole('user');
         auth()->login($newUser, true);
     }
 
@@ -49,7 +49,7 @@ Route::get('login/google', function () {
 Route::get('/login/google/callback', function () {
     $google_user = Socialite::driver('google')->stateless()->user();
     $user = User::where("google_id", $google_user->id)->orWhere('email', $google_user->getEmail())->first();
-    // dd($user);
+
 
     if ($user) {
         auth()->login($user, true);
@@ -61,6 +61,8 @@ Route::get('/login/google/callback', function () {
             'google_id' => $google_user->getId(),
             'password' => Hash::make($google_user->getId()),
         ]);
+
+        $newUser->assignRole('user');
 
         auth()->login($newUser, true);
     }
