@@ -7,7 +7,6 @@ use App\Models\CompanyCategory;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use App\Services\ProvinceService;
-use Illuminate\Support\Facades\Cache;
 
 class JobController extends Controller
 {

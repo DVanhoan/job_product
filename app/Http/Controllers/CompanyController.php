@@ -60,7 +60,7 @@ class CompanyController extends Controller
     public function edit()
     {
         $company = auth()->user()->company;
-        $categories = CompanyCategory::cache()->get();
+        $categories = CompanyCategory::all();
         return response()->view('company.edit', compact('company', 'categories'));
     }
 
