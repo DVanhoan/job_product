@@ -173,7 +173,7 @@ class CompanySeeder extends Seeder
                         </ul>';
 
 
-        $postCount = rand(1, 10);
+        $postCount = rand(1, 100);
 
         for ($i = 0; $i < $postCount; $i++) {
             Post::create([
