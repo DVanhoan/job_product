@@ -17,9 +17,8 @@ class AuthorController extends Controller
         $applications = null;
 
         if ($this->hasCompany()) {
-            //without the if block the posts relationship returns error
             $company = auth()->user()->company;
-            $posts = $company->posts()->get();
+            $posts = $company->posts()->paginate(10);
 
             if ($company->posts->count()) {
                 $livePosts = $posts->where('deadline', '>', Carbon::now())->count();
@@ -27,17 +26,14 @@ class AuthorController extends Controller
                 $applications = JobApplication::whereIn('post_id', $ids)->get();
             }
         }
-
-        //doesnt have company
         return view('account.author-section')->with([
             'company' => $company,
             'applications' => $applications,
-            'livePosts' => $livePosts
+            'livePosts' => $livePosts,
+            'posts' => $posts
         ]);
     }
 
-    // Author Employer panel
-    //employer is company of author
     public function employer($id)
     {
         $company = Company::with('posts')->find($id);

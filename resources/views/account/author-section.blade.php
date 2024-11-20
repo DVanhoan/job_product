@@ -108,8 +108,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if($company)
-                            @foreach($company->posts as $index=>$post)
+                        @if($posts)
+                            @foreach($posts as $index=>$post)
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td> <a href="{{route('post.show',['job'=>$post])}}" target="_blank" title="Go to this post">{{$post->job_title}}</a></td>
@@ -144,6 +144,9 @@
                         @endif
                     </tbody>
                 </table>
+                <div class="pagination-wrapper text-center">
+                    {{$posts->links()}}
+                </div>
             </div>
           </div>
         </div>
