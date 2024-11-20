@@ -29,22 +29,27 @@ class CompanyController extends Controller
     public function store(Request $request)
     {
         $this->validateCompany($request);
-
-        $companyData = $request->only(['title', 'description', 'category', 'website']);
-        $companyData['user_id'] = auth()->user()->id;
+        $company = new Company();
+        $company->user_id = auth()->user()->id;
+        $company->title = $request->title;
+        $company->description = $request->description;
+        $company->company_category_id = $request->category;
+        $company->website = $request->website;
 
         try {
             if ($request->hasFile('logo')) {
-                $companyData['logo'] = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
+                $company->logo = $uploadedFileUrl;
             }
 
             if ($request->hasFile('cover_img')) {
-                $companyData['cover_img'] = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
+                $company->cover_img = $uploadedFileUrl;
             } else {
-                $companyData['cover_img'] = 'nocover';
+                $company->cover_img = 'nocover';
             }
 
-            Company::create($companyData);
+            $company->save();
 
             Alert::success('Company Created!', 'success');
             return redirect()->route('account.authorSection');
@@ -72,18 +77,25 @@ class CompanyController extends Controller
         $this->validateCompanyUpdate($request);
 
         $company = auth()->user()->company;
-        $companyData = $request->only(['title', 'description', 'category', 'website']);
+        $company->user_id = auth()->user()->id;
+        $company->title = $request->title;
+        $company->description = $request->description;
+        $company->company_category_id = $request->category;
+        $company->website = $request->website;
+
 
         try {
             if ($request->hasFile('logo')) {
-                $companyData['logo'] = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('logo')->getRealPath())->getSecurePath();
+                $company->logo = $uploadedFileUrl;
             }
 
             if ($request->hasFile('cover_img')) {
-                $companyData['cover_img'] = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
+                $uploadedFileUrl = Cloudinary::uploadFile($request->file('cover_img')->getRealPath())->getSecurePath();
+                $company->cover_img = $uploadedFileUrl;
             }
 
-            $company->update($companyData);
+            $company->save();
 
             Alert::success('Company Updated!', 'success');
             return redirect()->route('account.authorSection');

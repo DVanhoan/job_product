@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class AuthorController extends Controller
 {
-    /** Author dashboard */
+
     public function authorSection()
     {
         $livePosts = null;
@@ -19,6 +19,8 @@ class AuthorController extends Controller
         if ($this->hasCompany()) {
             $company = auth()->user()->company;
             $posts = $company->posts()->paginate(10);
+
+            $company->posts = $posts;
 
             if ($company->posts->count()) {
                 $livePosts = $posts->where('deadline', '>', Carbon::now())->count();
@@ -30,7 +32,6 @@ class AuthorController extends Controller
             'company' => $company,
             'applications' => $applications,
             'livePosts' => $livePosts,
-            'posts' => $posts
         ]);
     }
 
@@ -39,7 +40,6 @@ class AuthorController extends Controller
         $company = Company::with('posts')->find($id);
 
         if (!$company) {
-            // Nếu không tìm thấy công ty với ID này, có thể trả về 404 hoặc xử lý lỗi khác
             abort(404, 'Company not found');
         }
 
@@ -49,7 +49,6 @@ class AuthorController extends Controller
     }
 
 
-    //check if has company
     protected function hasCompany()
     {
         return auth()->user()->company ? true : false;

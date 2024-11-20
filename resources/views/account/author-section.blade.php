@@ -108,8 +108,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if($posts)
-                            @foreach($posts as $index=>$post)
+                        @if($company->posts->count())
+                            @foreach($company->posts as $index=>$post)
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td> <a href="{{route('post.show',['job'=>$post])}}" target="_blank" title="Go to this post">{{$post->job_title}}</a></td>
@@ -144,15 +144,15 @@
                         @endif
                     </tbody>
                 </table>
-                <div class="d-flex justify-content-center">
-                    {{$posts->links()}}
-                </div>
+                @if($company->posts->count())
+                    <div class="d-flex justify-content-center">
+                        {{ $company->posts->links() }}
+                    </div>
+                @endif
             </div>
           </div>
         </div>
-      <!--/row-->
       </section>
-
     </div>
   </div>
 @endSection
@@ -160,7 +160,6 @@
 @push('js')
 <script>
     $(document).ready(function(){
-        //delete author company
         $('#companyDestroyBtn').click(function(e){
             e.preventDefault();
             if(window.confirm('Are you sure you want delete the company?')){
