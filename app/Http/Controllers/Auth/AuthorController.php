@@ -15,12 +15,10 @@ class AuthorController extends Controller
         $livePosts = null;
         $company = null;
         $applications = null;
-
+        $posts = null;
         if ($this->hasCompany()) {
             $company = auth()->user()->company;
             $posts = $company->posts()->paginate(10);
-
-            $company->posts = $posts;
 
             if ($company->posts->count()) {
                 $livePosts = $posts->where('deadline', '>', Carbon::now())->count();
@@ -32,6 +30,7 @@ class AuthorController extends Controller
             'company' => $company,
             'applications' => $applications,
             'livePosts' => $livePosts,
+            'posts' => $posts
         ]);
     }
 

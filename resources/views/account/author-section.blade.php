@@ -108,8 +108,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if($company->posts->count())
-                            @foreach($company->posts as $index=>$post)
+                        @if($posts->count())
+                            @foreach($posts as $index=>$post)
                             <tr>
                                 <td>{{$index+1}}</td>
                                 <td> <a href="{{route('post.show',['job'=>$post])}}" target="_blank" title="Go to this post">{{$post->job_title}}</a></td>
@@ -144,9 +144,9 @@
                         @endif
                     </tbody>
                 </table>
-                @if($company->posts->count())
+                @if($posts->count())
                     <div class="d-flex justify-content-center">
-                        {{ $company->posts->links() }}
+                        {{ $posts->links() }}
                     </div>
                 @endif
             </div>
