@@ -13,19 +13,7 @@ fi
 
 php artisan key:generate
 php artisan migrate --force
-
-SEEDER_CHECK=$(php -r "
-require 'vendor/autoload.php';
-\$count = \App\Models\Post::count();
-echo \$count === 0 ? 'run' : 'skip';
-")
-
-if [ "$SEEDER_CHECK" == "run" ]; then
-    echo "Running seeders..."
-    php artisan db:seed --force
-else
-    echo "Seeders skipped, data already exists."
-fi
+php artisan db:seed --force
 php artisan cache:clear
 php artisan config:clear
 php artisan route:clear
