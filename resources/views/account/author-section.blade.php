@@ -108,7 +108,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @if($posts->count())
+                        @if($posts)
                             @foreach($posts as $index=>$post)
                             <tr>
                                 <td>{{$index+1}}</td>
@@ -144,7 +144,7 @@
                         @endif
                     </tbody>
                 </table>
-                @if($posts->count())
+                @if($posts)
                     <div class="d-flex justify-content-center">
                         {{ $posts->links() }}
                     </div>
