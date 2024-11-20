@@ -85,7 +85,7 @@
                                     />
                                     <label for="rememberMe" class="mb-0">Remember me</label>
                                 </div>
-                                <a href="#" class="secondary-link">
+                                <a href="{{ route('password.request') }}" class="secondary-link">
                                     Forgot password?
                                 </a>
                             </div>
