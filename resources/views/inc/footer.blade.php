@@ -1,5 +1,6 @@
 <section class="bg-dark py-5">
     <footer class="container mx-auto row px-5">
+
         <div class="col-12 col-md-4 mb-4 text-center text-md-start">
             <img
                 src="{{ asset('Logo.svg') }}"
@@ -75,9 +76,7 @@
 
 
         <div class="col-12 text-center mt-5">
-            <div
-                class="bg-primary text-white p-3 rounded-circle d-inline-block"
-            >
+            <div class="bg-primary text-white p-3 rounded-circle d-inline-block">
                 <i class="fas fa-heart fa-lg"></i>
             </div>
             <p class="mt-3 font-weight-bold text-muted">
