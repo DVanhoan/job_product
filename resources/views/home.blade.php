@@ -115,7 +115,7 @@
                 @endif
             @endforeach
         </div>
-        <div class="d-flex justify-content-center">
+        <div class="d-flex justify-content-center pagination-container">
             @if($posts->count() > 0)
                 {{ $posts->links() }}
             @else

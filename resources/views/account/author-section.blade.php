@@ -145,8 +145,8 @@
                     </tbody>
                 </table>
                 @if($posts)
-                    <div class="d-flex justify-content-center pagination-container">
-                        {{ $posts->links('pagination::bootstrap-5') }}
+                    <div class="d-flex justify-content-center">
+                        {{ $posts->links() }}
                     </div>
                 @endif
             </div>
@@ -156,7 +156,6 @@
     </div>
   </div>
 @endSection
-
 
 @push('js')
 <script>
