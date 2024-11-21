@@ -117,7 +117,7 @@
         </div>
         <div class="d-flex justify-content-center pagination-container">
             @if($posts->count() > 0)
-                {{ $posts->links() }}
+                {{ $posts->links('pagination::bootstrap-5') }}
             @else
                 <p>Không có bài viết nào.</p>
             @endif

@@ -13,7 +13,7 @@
 
                     <div class="col-12 col-md-3 text-center">
                         <a href="{{ route('post.show', ['job' => $post]) }}">
-                            <div class="border p-2">
+                            <div class="p-2">
                                 <img
                                     src="{{ asset($company->logo) }}"
                                     class="img-fluid rounded"
