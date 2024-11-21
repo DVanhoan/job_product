@@ -12521,14 +12521,16 @@ button {
 }
 
 .pagination-container nav::-webkit-scrollbar {
-    height: 5px;
+    height: 10px;
 }
 
 .pagination-container nav::-webkit-scrollbar-thumb {
     background-color: #aaa;
     border-radius: 10px;
+    border: 2px solid #f0f0f0;
 }
 
 .pagination-container nav::-webkit-scrollbar-track {
     background-color: #f0f0f0;
+    border-radius: 10px;
 }

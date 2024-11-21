@@ -68,7 +68,7 @@
         </div>
         @if ($posts)
             <div class="d-flex justify-content-center pagination-container">
-                {{ $posts->links('pagination::bootstrap-5') }}
+                {{ $posts->links() }}
             </div>
         @endif
     </div>

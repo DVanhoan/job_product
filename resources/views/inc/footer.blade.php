@@ -1,5 +1,6 @@
 <section class="bg-dark py-5">
-    <footer class="container mx-auto row justify-content-between align-items-start px-3 px-md-5">
+    <footer class="container mx-auto d-flex flex-wrap justify-content-between align-items-start px-5">
+
         <div class="col-12 col-md-3 text-center text-md-start mb-4">
             <img src="{{ asset('Logo.svg') }}" alt="logo" class="invert img-fluid mb-3" />
             <p class="text-muted">
@@ -34,6 +35,7 @@
             </ul>
         </div>
 
+
         <div class="col-12 col-sm-6 col-md-2 text-center text-md-start mb-4">
             <h5 class="text-light">Search for jobs</h5>
             <ul class="list-unstyled mt-3">
@@ -66,7 +68,10 @@
             </ul>
         </div>
     </footer>
+
+
 </section>
+
 
 <button onclick="scrollToTop()" id="scrollToTopBtn" class="scroll-to-top">
     <i class="fas fa-arrow-up"></i>
@@ -74,21 +79,64 @@
 
 
 <style>
-    .scroll-to-top {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        background: #08036e;
-        color: #fff;
-        border: none;
-        border-radius: 50%;
-        padding: 0.75rem 1rem;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        cursor: pointer;
-        transition: background 0.3s;
-    }
+    footer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
 
-    .scroll-to-top:hover {
-        background: #574bff;
-    }
+footer .col-md-3 img {
+    max-width: 150px;
+}
+
+footer h5 {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+footer ul {
+    padding-left: 0;
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 0.5rem;
+}
+
+footer ul li a {
+    color: #6c757d;
+    transition: color 0.3s;
+}
+
+footer ul li a:hover {
+    color: #fff;
+}
+
+footer .list-inline-item a {
+    transition: color 0.3s;
+}
+
+footer .list-inline-item a:hover {
+    color: #fff;
+}
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: #08036e;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    padding: 0.75rem 1rem;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.scroll-to-top:hover {
+    background: #574bff;
+}
+
 </style>
