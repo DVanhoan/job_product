@@ -67,3 +67,28 @@
         </div>
     </footer>
 </section>
+
+<button onclick="scrollToTop()" id="scrollToTopBtn" class="scroll-to-top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+
+<style>
+    .scroll-to-top {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #08036e;
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        padding: 0.75rem 1rem;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+
+    .scroll-to-top:hover {
+        background: #574bff;
+    }
+</style>
