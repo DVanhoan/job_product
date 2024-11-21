@@ -36,7 +36,8 @@ class AuthorController extends Controller
 
     public function employer($id)
     {
-        $company = Company::with('posts')->find($id);
+        $company = Company::find($id);
+        $posts = $company->posts()->paginate(10);
 
         if (!$company) {
             abort(404, 'Company not found');
@@ -44,6 +45,7 @@ class AuthorController extends Controller
 
         return view('account.employer')->with([
             'company' => $company,
+            'posts' => $posts,
         ]);
     }
 

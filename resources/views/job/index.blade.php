@@ -415,8 +415,8 @@
                                 {{ $posts->total() }} Total Jobs found with
                                 matching search
                             </div>
-                            <div class="d-flex justify-content-center">
-                                {{ $posts->links() }}
+                            <div class="d-flex justify-content-center flex-wrap">
+                                {{ $posts->links('pagination::bootstrap-5') }}
                             </div>
                         </div>
                     @endif
