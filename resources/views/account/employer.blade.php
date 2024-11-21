@@ -67,7 +67,7 @@
             @endforeach
         </div>
         @if ($posts)
-            <div class="d-flex justify-content-center flex-wrap">
+            <div class="d-flex justify-content-center pagination-container">
                 {{ $posts->links('pagination::bootstrap-5') }}
             </div>
         @endif

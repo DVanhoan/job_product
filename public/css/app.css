@@ -12507,3 +12507,28 @@ button {
 .scroll-to-top:hover {
     background-color: #0056b3;
 }
+
+
+
+.pagination-container nav {
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+.pagination-container .pagination {
+    justify-content: center;
+    flex-wrap: nowrap;
+}
+
+.pagination-container nav::-webkit-scrollbar {
+    height: 5px;
+}
+
+.pagination-container nav::-webkit-scrollbar-thumb {
+    background-color: #aaa;
+    border-radius: 10px;
+}
+
+.pagination-container nav::-webkit-scrollbar-track {
+    background-color: #f0f0f0;
+}
