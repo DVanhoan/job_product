@@ -41,10 +41,30 @@
 
             <!-- Navigation Buttons -->
             <div class="text-center mb-4">
-                <a href="#about" class="btn btn-outline-primary mx-2">About</a>
-                <a href="#posts" class="btn btn-outline-primary mx-2">
-                    Open Jobs
-                </a>
+                <div class="">
+                    @php
+                        $followStatus = $company->getFollowStatus(auth()->id());
+                    @endphp
+
+                    @if ($followStatus === 'accepted')
+                        <button class="btn btn-success" disabled>
+                            Following
+                        </button>
+                    @elseif ($followStatus === 'pending')
+                        <button class="btn btn-warning" disabled>
+                            Pending Approval
+                        </button>
+                    @else
+                        <a href="{{ route('account.follow', ['company_id' => $company->id]) }}"
+                           class="btn btn-outline-primary">
+                            Follow Us
+                        </a>
+                    @endif
+
+                    <a href="#" class="btn btn-outline-primary">Chat Us</a>
+                    <a href="#about" class="btn btn-outline-primary">About</a>
+                    <a href="#posts" class="btn btn-outline-primary">Open Jobs</a>
+                </div>
             </div>
 
             <!-- About Section -->
