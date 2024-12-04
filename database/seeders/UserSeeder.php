@@ -15,10 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // Xóa tất cả các bản ghi trong bảng users trước khi thêm dữ liệu mới
-        User::truncate();
-
-        // Danh sách các user mới
         $factoryUsers = [
             [
                 'name' => 'admin user',

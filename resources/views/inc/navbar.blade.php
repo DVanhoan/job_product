@@ -22,6 +22,7 @@
               @role('author')
               <a class="dropdown-item" href="{{route('account.authorSection')}}"> <i class="fa fa-cogs fa-sm "></i> Author Dashboard </a>
               @endrole
+              <a class="dropdown-item" href="{{route('account.messages')}}"> <i class="fas fa-user fa-sm "></i> Message </a>
               <a class="dropdown-item" href="{{route('account.index')}}"> <i class="fas fa-user fa-sm "></i> Profile </a>
               <a class="dropdown-item" href="{{route('account.changePassword')}}"> <i class="fas fa-key fa-sm "></i> Change Password </a>
                 <div class="dropdown-divider"></div>

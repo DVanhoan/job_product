@@ -9,66 +9,12 @@ use App\Http\Controllers\JobApplicationController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\savedJobController;
+use App\Http\Controllers\Api\MessageController;
+use App\Http\Controllers\FollowController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Socialite\Facades\Socialite;
-
-
-
-Route::get('login/github', function () {
-    return Socialite::driver('github')->redirect();
-})->name('login.github');
-
-Route::get('/login/github/callback', function () {
-    $github_user = Socialite::driver('github')->stateless()->user();
-    $user = User::where("github_id", $github_user->id)->orWhere('email', $github_user->getEmail())->first();
-
-    if ($user) {
-        auth()->login($user, true);
-    } else {
-        $newUser = User::create([
-            'name' => $github_user->getNickname(),
-            'email' => $github_user->getEmail(),
-            'avatar' => $github_user->getAvatar(),
-            'github_id' => $github_user->getId(),
-            'password' => Hash::make($github_user->getId()),
-        ]);
-        $newUser->assignRole('user');
-        auth()->login($newUser, true);
-    }
-
-    return redirect()->route('post.index');
-});
-
-
-Route::get('login/google', function () {
-    return Socialite::driver('google')->redirect();
-})->name('login.google');
-
-Route::get('/login/google/callback', function () {
-    $google_user = Socialite::driver('google')->stateless()->user();
-    $user = User::where("google_id", $google_user->id)->orWhere('email', $google_user->getEmail())->first();
-
-
-    if ($user) {
-        auth()->login($user, true);
-    } else {
-        $newUser = User::create([
-            'name' => $google_user->getName(),
-            'email' => $google_user->getEmail(),
-            'avatar' => $google_user->getAvatar(),
-            'google_id' => $google_user->getId(),
-            'password' => Hash::make($google_user->getId()),
-        ]);
-
-        $newUser->assignRole('user');
-
-        auth()->login($newUser, true);
-    }
-
-    return redirect()->route('post.index');
-});
 
 
 Route::get('/', [PostController::class, 'index'])->name('post.index');
@@ -77,15 +23,16 @@ Route::get('employer/{id}', [AuthorController::class, 'employer'])->name('accoun
 
 
 Route::get('/search', [JobController::class, 'index'])->name('job.index');
-Route::get('job-titles', [JobController::class, 'getAllByTitle'])->name('job.getAllByTitle');
-Route::get('companies', [JobController::class, 'getAllOrganization'])->name('job.getAllOrganization');
 
 
 Route::middleware('auth')->prefix('account')->group(function () {
+    Route::get('follow', [FollowController::class, 'store'])->name('account.follow');
+    Route::post('follow/respond', [FollowController::class, 'respond'])->name('account.follow.respond');
 
+    Route::get('/messagePage', [MessageController::class, 'index'])->name('account.messages');
+
+    Route::get('notification', [AccountController::class, 'notification'])->name('account.notification');
     Route::post('/update-profile-image', [AccountController::class, 'updateProfile'])->name('account.updateProfileImage');
-
-
     Route::get('logout', [AccountController::class, 'logout'])->name('account.logout');
     Route::get('overview', [AccountController::class, 'index'])->name('account.index');
     Route::get('deactivate', [AccountController::class, 'deactivateView'])->name('account.deactivate');
@@ -114,11 +61,17 @@ Route::middleware('auth')->prefix('account')->group(function () {
 
 
     Route::group(['middleware' => ['role:author']], function () {
+
+        Route::post('follow/respond', [FollowController::class, 'respond'])->name('account.follow.respond');
+        Route::get('follows', [FollowController::class, 'dashboard'])->name('account.follows');
+
         Route::get('author-section', [AuthorController::class, 'authorSection'])->name('account.authorSection');
 
         Route::get('job-application/{id}', [JobApplicationController::class, 'show'])->name('jobApplication.show');
         Route::delete('job-application', [JobApplicationController::class, 'destroy'])->name('jobApplication.destroy');
         Route::get('job-application', [JobApplicationController::class, 'index'])->name('jobApplication.index');
+        Route::post('job-application/accept/{id}', [JobApplicationController::class, 'accept'])->name('jobApplication.accept');
+        Route::post('job-application/decline/{id}', [JobApplicationController::class, 'decline'])->name('jobApplication.decline');
 
         Route::get('post/create', [PostController::class, 'create'])->name('post.create');
         Route::post('post', [PostController::class, 'store'])->name('post.store');
@@ -138,4 +91,61 @@ Route::middleware('auth')->prefix('account')->group(function () {
         Route::get('become-employer', [AccountController::class, 'becomeEmployerView'])->name('account.becomeEmployer');
         Route::post('become-employer', [AccountController::class, 'becomeEmployer'])->name('account.becomeEmployer');
     });
+});
+
+
+Route::get('login/github', function () {
+    return Socialite::driver('github')->redirect();
+})->name('login.github');
+
+Route::get('/login/github/callback', function () {
+    $github_user = Socialite::driver('github')->stateless()->user();
+    $user = User::where("github_id", $github_user->id)->orWhere('email', $github_user->getEmail())->first();
+
+    if ($user) {
+        auth()->login($user, true);
+    } else {
+        $newUser = User::create([
+            'name' => $github_user->getNickname(),
+            'email' => $github_user->getEmail(),
+            'avatar' => $github_user->getAvatar(),
+            'github_id' => $github_user->getId(),
+            'password' => Hash::make($github_user->getId()),
+        ]);
+
+        $newUser->assignRole('user');
+
+        auth()->login($newUser, true);
+    }
+
+    return redirect()->route('post.index');
+});
+
+
+Route::get('login/google', function () {
+    return Socialite::driver('google')->redirect();
+})->name('login.google');
+
+Route::get('/login/google/callback', function () {
+    $google_user = Socialite::driver('google')->stateless()->user();
+    $user = User::where("google_id", $google_user->id)->orWhere('email', $google_user->getEmail())->first();
+    // dd($user);
+
+    if ($user) {
+        auth()->login($user, true);
+    } else {
+        $newUser = User::create([
+            'name' => $google_user->getName(),
+            'email' => $google_user->getEmail(),
+            'avatar' => $google_user->getAvatar(),
+            'google_id' => $google_user->getId(),
+            'password' => Hash::make($google_user->getId()),
+        ]);
+
+        $newUser->assignRole('user');
+
+        auth()->login($newUser, true);
+    }
+
+    return redirect()->route('post.index');
 });

@@ -17,12 +17,23 @@ class CategorySeeder extends Seeder
         $categories = [
             'IT & Telecommunication',
             'Marketing / Advertising',
-            'General Mgmt', 'Banking / Insurance /Financial Services',
+            'General Mgmt',
+            'Banking / Insurance /Financial Services',
             'Construction / Engineering / Architects ',
             'Creative / Graphics / Designing',
-            'Social work', 'hospitality', 'journalism-editor-media', 'Agriculture + Livestock',
-            'Teaching profession', 'Engineer', 'Sales', 'Leadership', 'Web development',
-            'Mobile App', 'Sales', 'E-Commerce', 'Others'
+            'Social work',
+            'hospitality',
+            'journalism-editor-media',
+            'Agriculture + Livestock',
+            'Teaching profession',
+            'Engineer',
+            'Sales',
+            'Leadership',
+            'Web development',
+            'Mobile App',
+            'Sales',
+            'E-Commerce',
+            'Others'
         ];
         foreach ($categories as $category) {
             DB::table('company_categories')->insert([
