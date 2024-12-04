@@ -1,9 +1,13 @@
 <?php
 
-use App\Http\Controllers\JobController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Api\ConversationController;
+use App\Http\Controllers\API\MessageController;
+use App\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+
+Route::middleware('web')->group(function () {
+    Route::get('/messages', [ConversationController::class, 'index']);
+    Route::get('/conversations/{conversationId}', [ConversationController::class, 'show']);
+    Route::post('/sendMessage', [MessageController::class, 'send'])->withoutMiddleware([VerifyCsrfToken::class]);;
 });
