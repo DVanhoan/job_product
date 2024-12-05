@@ -3,8 +3,9 @@ import "../../../css/message.css";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "react-hot-toast";
 import echo from "../../util/echo";
+import LoadingSpinner from "./LoadingSpinner";
 
-const Message = ({ messages = [], conversationId, user, onMessageSent }) => {
+const Message = ({ messages = [], conversationId, user, onMessageSent, isLoading }) => {
     const [showFileInput, setShowFileInput] = useState(false);
     const [selectedFile, setSelectedFile] = useState(null);
     const [message, setMessage] = useState("");
@@ -13,6 +14,7 @@ const Message = ({ messages = [], conversationId, user, onMessageSent }) => {
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
+    console.log('crsfToken: ', csrfToken);
 
     useEffect(() => {
         scrollToBottom();
@@ -66,7 +68,7 @@ const Message = ({ messages = [], conversationId, user, onMessageSent }) => {
         }
     };
 
-    const { mutate: sendMessage, isLoading } = useMutation({
+    const { mutate: sendMessage, isLoadingFetch } = useMutation({
         mutationFn: async ({ content, file, conversationId, sender }) => {
             const formData = new FormData();
             formData.append("content", content);
@@ -104,25 +106,31 @@ const Message = ({ messages = [], conversationId, user, onMessageSent }) => {
     return (
         <div className="messages-page">
             <div className="messages-container">
-                {messages.length > 0 ? (
-                    [...messages].reverse().map((msg, index) => (
-                        <div key={index}>
-                            {msg.created_at && <p className="message-date">{msg.created_at}</p>}
-                            <div className={`message ${msg.isSender ? "sent" : "received"}`}>{!msg.isSender && (
-                                <img
-                                    src={msg.avatar}
-                                    alt="Avatar"
-                                    className="avatar"
-                                />
-                            )}
-                                <div className={`message-bubble ${msg.isSender ? "bubble-sent" : "bubble-received"}`}>{msg.content}
+                {isLoading ? (
+                    <div className="loading-container">
+                        <LoadingSpinner size="lg" />
+                        <p>Loading...</p>
+                    </div>
+                ) :
+                    messages.length > 0 ? (
+                        [...messages].reverse().map((msg, index) => (
+                            <div key={index}>
+                                {msg.created_at && <p className="message-date">{msg.created_at}</p>}
+                                <div className={`message ${msg.isSender ? "sent" : "received"}`}>{!msg.isSender && (
+                                    <img
+                                        src={msg.avatar}
+                                        alt="Avatar"
+                                        className="avatar"
+                                    />
+                                )}
+                                    <div className={`message-bubble ${msg.isSender ? "bubble-sent" : "bubble-received"}`}>{msg.content}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))
-                ) : (
-                    <div className="no-messages">No messages yet. Start the conversation!</div>
-                )}
+                        ))
+                    ) : (
+                        <div className="no-messages">No messages yet. Start the conversation!</div>
+                    )}
                 <div ref={messagesEndRef} />
             </div>
 
@@ -176,13 +184,13 @@ const Message = ({ messages = [], conversationId, user, onMessageSent }) => {
                     className="footer-input"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
-                    disabled={isLoading}
+                    disabled={isLoadingFetch}
                 />
                 <button
                     className="footer-icon"
                     onClick={handleSendMessage}
-                    disabled={isLoading}>
-                    {isLoading ? (
+                    disabled={isLoadingFetch}>
+                    {isLoadingFetch ? (
                         <i className="fas fa-spinner fa-spin"></i>
                     ) : (
                         <i className="fas fa-paper-plane"></i>

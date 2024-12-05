@@ -3,13 +3,14 @@ import { toast, Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import SideBar from "./components/common/SideBar";
 import { useState, useEffect } from "react";
+import LoadingSpinner from "./components/common/LoadingSpinner";
 
 function Main() {
     const [activeConversationId, setActiveConversationId] = useState(null);
     const [recentMessages, setRecentMessages] = useState([]);
     const [user, setUser] = useState(null);
 
-    const { data, error, refetch, } = useQuery({
+    const { data, error, isLoading, refetch, } = useQuery({
         queryKey: ["conversations"],
         queryFn: async () => {
             const res = await fetch("/api/messages", {
@@ -55,7 +56,22 @@ function Main() {
         return <div>Error: {error.message}</div>;
     }
 
-    console.log("data", data);
+
+    if (isLoading) {
+        return (
+            <div
+                style={{
+                    height: "100vh",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                }}
+            >
+                <LoadingSpinner size="lg" />
+            </div>
+        );
+    }
+
 
     return (
         <div className="main-layout">
@@ -63,6 +79,7 @@ function Main() {
                 conversations={data?.conversations || []}
                 activeConversationId={activeConversationId}
                 onConversationClick={handleConversationClick}
+                isLoading={isLoading}
             />
             <div className="main-container">
                 <div className="content-container">
@@ -71,6 +88,7 @@ function Main() {
                         user={user}
                         conversationId={activeConversationId}
                         onMessageSent={refetch}
+                        isLoading={isLoading}
                     />
                 </div>
                 <Toaster />
