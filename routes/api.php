@@ -11,3 +11,4 @@ Route::middleware('web')->group(function () {
     Route::get('/conversations/{conversationId}', [ConversationController::class, 'show']);
     Route::post('/sendMessage', [MessageController::class, 'send'])->withoutMiddleware([VerifyCsrfToken::class]);;
 });
+
