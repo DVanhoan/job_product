@@ -25,6 +25,10 @@
         <a href="{{route('jobApplication.index')}}" class="account-nav-link">
           <i class="fas fa-bell"></i> Job Applications
       </li>
+      <li class="list-group-item list-group-item-action {{ request()->segment(2) == 'follows' ? 'active': ''}}">
+        <a href="{{route('account.follows')}}" class="account-nav-link">
+          <i class="fas fa-bell"></i> Followers
+      </li>
       @endrole
       <li class="list-group-item list-group-item-action {{ request()->segment(2) == 'overview' ? 'active': ''}}">
         <a href="{{route('account.index')}}" class="account-nav-link">
@@ -36,6 +40,11 @@
         <a href="{{route('account.becomeEmployer')}}" class="account-nav-link">
           <i class="fas fa-user-shield"></i> Become an employer
         </a>
+      </li>
+      <li class="list-group-item list-group-item-action {{ request()->segment(2) == 'notification' ? 'active': ''}}">
+          <a href="{{route('account.notification')}}" class="account-nav-link">
+              <i class="fas fa-user-shield"></i> Notificatins
+           </a>
       </li>
       @endrole
       <li class="list-group-item list-group-item-action {{ request()->segment(2) == 'change-password' ? 'active': ''}}">
