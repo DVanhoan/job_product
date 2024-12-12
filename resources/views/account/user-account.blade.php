@@ -10,7 +10,7 @@
                     style="width: 100%; max-width: 750px; border-radius: 10px"
                 >
                     <div class="row g-0">
-                        <!-- Profile Image Section -->
+
                         <div
                             class="col-sm-4 bg-c-lite-green user-profile text-center d-flex flex-column justify-content-center align-items-center p-4"
                         >
@@ -53,7 +53,6 @@
                             </div>
                         </div>
 
-                        <!-- Information Section -->
                         <div class="col-sm-8 p-4">
                             <h6 class="f-w-600 mb-3">Information</h6>
                             <div class="row">
@@ -85,7 +84,7 @@
 
 @push('css')
     <style>
-        /* Profile Image Container */
+
         .profile-img-container {
             width: 120px;
             height: 120px;

@@ -161,16 +161,17 @@ class AccountController extends Controller
 
             $user->save();
 
-            Alert::success('Updated ', 'Success Message');
+            Alert::success('Updated ', 'Successfully Updated!');
             return redirect(route('account.index'));
         } catch (\Exception $e) {
 
-            Alert::error('Failed', 'Error Message');
+            Alert::error('Failed', 'Error: ' . $e->getMessage());
             return redirect()->back();
         }
     }
 
-    public function notification(){
+    public function notification()
+    {
         $notifications = Notification::where('user_id', auth()->user()->id)->get();
         return view('account.notification', compact('notifications'));
     }
