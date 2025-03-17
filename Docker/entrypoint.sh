@@ -12,7 +12,7 @@ else
 fi
 
 php artisan key:generate
-# php artisan migrate --force
+php artisan migrate --force
 php artisan db:seed --force
 php artisan cache:clear
 php artisan config:clear
