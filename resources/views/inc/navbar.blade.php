@@ -32,29 +32,6 @@
                 </a>
             </div>
           </li>
-                <li class="nav-item dropdown dropdown-left">
-                    <a class="nav-link dropdown-toggle" href="#" id="notificationDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="fas fa-bell"></i>
-                        <span class="badge badge-danger">3</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="notificationDropdown">
-                        <h6 class="dropdown-header">Notifications</h6>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-info-circle fa-sm text-primary"></i> New job posted
-                            <span class="small text-gray-500">2 minutes ago</span>
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-user-plus fa-sm text-success"></i> New candidate applied
-                            <span class="small text-gray-500">1 hour ago</span>
-                        </a>
-                        <a class="dropdown-item" href="#">
-                            <i class="fas fa-check-circle fa-sm text-warning"></i> Profile verified
-                            <span class="small text-gray-500">Yesterday</span>
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item text-center small text-gray-500" href="#">View all notifications</a>
-                    </div>
-                </li>
           @endauth
           @guest
           <a href="/login" class="btn btn-primary">Sign up or Log in</a>
