@@ -19,7 +19,7 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://cuoiky-dvh.onrender.com/'],
+    'allowed_origins' => ['https://findjob.up.railway.app'],
 
     'allowed_origins_patterns' => [],
 
