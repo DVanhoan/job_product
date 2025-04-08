@@ -143,44 +143,6 @@
 
 
 
-<section class="team-section">
-    <div class="container">
-        <h2 class="team-title">OUR AMAZING TEAM</h2>
-        <div class="row mt-5">
-            <div class="col-md-4 team-member">
-                <img src="images/members/member2.jpeg" alt="Parveen Anand" class="img-fluid">
-                <h4 class="member-name">Nguyễn Tấn Duy</h4>
-                <p class="member-position">Member</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4 team-member">
-                <img src="{{ secure_asset('images/members/leader.png') }}" alt="Diana Petersen" class="img-fluid">
-                <h4 class="member-name">Dương Văn Hoan</h4>
-                <p class="member-position">Team Leader</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            <div class="col-md-4 team-member">
-                <img src="{{ secure_asset('images/members/member1.jpg') }}" alt="Larry Parker" class="img-fluid">
-                <h4 class="member-name">A Phiên</h4>
-                <p class="member-position">Member</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
 <style>
     .job-card {
         border-radius: 10px;
