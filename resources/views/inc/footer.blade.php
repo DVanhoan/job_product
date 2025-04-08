@@ -2,7 +2,7 @@
     <footer class="container mx-auto d-flex flex-wrap justify-content-between align-items-start px-5">
 
         <div class="col-12 col-md-3 text-center text-md-start mb-4">
-            <img src="{{ asset('Logo.svg') }}" alt="logo" class="invert img-fluid mb-3" />
+            <img src="{{ secure_asset('Logo.svg') }}" alt="logo" class="invert img-fluid mb-3" />
             <p class="text-muted">
                 Ehya is a job board and job site for job seekers and employers.
             </p>
@@ -78,8 +78,8 @@
 
 <div class="chat-container">
     <div class="chat-header">
-       <h5>Chat</h5>
-       <button type="button" class="close" onclick="closeChatModal()">
+        <h5>Chat</h5>
+        <button type="button" class="close" onclick="closeChatModal()">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
@@ -101,21 +101,21 @@
     <div class="chat-header">
         <h5>Chat</h5>
         <button type="button" class="close" onclick="closeChatModal()">
-             <span aria-hidden="true">&times;</span>
-         </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="chat-list">
         <div class="chat-item">
-            <img src="{{ asset('images/user-profile.png') }}" alt="Avatar" class="chat-avatar" />
-        <div class="chat-content">
-        <div class="item-header">
-            <span class="chat-name">Mobile App</span>
-            <span class="chat-time">1h</span>
+            <img src="{{ secure_asset('images/user-profile.png') }}" alt="Avatar" class="chat-avatar" />
+            <div class="chat-content">
+                <div class="item-header">
+                    <span class="chat-name">Mobile App</span>
+                    <span class="chat-time">1h</span>
+                </div>
+                <p class="chat-message">M Akash: 2020 Play Console Ava...</p>
+            </div>
+            <div class="chat-status"></div>
         </div>
-            <p class="chat-message">M Akash: 2020 Play Console Ava...</p>
-        </div>
-        <div class="chat-status"></div>
-    </div>
     </div>
 </div>
 
@@ -288,7 +288,8 @@
         cursor: pointer;
     }
 
-    .chat-container, .chat-list-container{
+    .chat-container,
+    .chat-list-container {
         position: fixed;
         bottom: 30px;
         right: 30px;
@@ -410,5 +411,4 @@
     .scroll-to-top:hover {
         background: #064c97;
     }
-
 </style>

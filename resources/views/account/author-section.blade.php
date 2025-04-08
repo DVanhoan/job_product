@@ -61,7 +61,8 @@
                                     <form action="{{route('company.destroy')}}" id="companyDestroyForm" method="POST">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" id="companyDestroyBtn" class="btn danger-btn">Delete Company</button>
+                                        <button type="submit" id="companyDestroyBtn" class="btn danger-btn">Delete
+                                            Company</button>
                                     </form>
                                 </div>
                                 @endif
@@ -71,10 +72,12 @@
                                 <div class="col-sm-12 col-md-12">
                                     <div class="card">
                                         <div class="card-body text-center">
-                                            <img src="{{asset($company->logo)}}" width="100px" class="img-fluid border p-2" alt="">
+                                            <img src="{{secure_asset($company->logo)}}" width="100px"
+                                                class="img-fluid border p-2" alt="">
                                             <h5>{{$company->title}}</h5>
                                             <small>{{$company->getCategory->category_name}}</small>
-                                            <a class="d-block" href="{{$company->website}}"><i class="fas fa-globe"></i></a>
+                                            <a class="d-block" href="{{$company->website}}"><i
+                                                    class="fas fa-globe"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -102,13 +105,15 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <span>{{ $request->follower->name }} wants to follow your company.</span>
                                         <div>
-                                            <form action="{{ route('account.follow.respond') }}" method="POST" class="d-inline">
+                                            <form action="{{ route('account.follow.respond') }}" method="POST"
+                                                class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="follow_id" value="{{ $request->id }}">
                                                 <input type="hidden" name="response" value="accepted">
                                                 <button type="submit" class="btn btn-success btn-sm">Accept</button>
                                             </form>
-                                            <form action="{{ route('account.follow.respond') }}" method="POST" class="d-inline">
+                                            <form action="{{ route('account.follow.respond') }}" method="POST"
+                                                class="d-inline">
                                                 @csrf
                                                 <input type="hidden" name="follow_id" value="{{ $request->id }}">
                                                 <input type="hidden" name="response" value="rejected">
@@ -152,7 +157,8 @@
                                 @foreach($posts as $index=>$post)
                                 <tr>
                                     <td>{{$index+1}}</td>
-                                    <td> <a href="{{route('post.show',['job'=>$post])}}" target="_blank" title="Go to this post">{{$post->job_title}}</a></td>
+                                    <td> <a href="{{route('post.show',['job'=>$post])}}" target="_blank"
+                                            title="Go to this post">{{$post->job_title}}</a></td>
                                     <td>{{$post->job_level}}</td>
                                     <td>{{$post->vacancy_count}}</td>
                                     <td>@php
@@ -163,8 +169,10 @@
                                         echo "$dayMonthYear <br> <span class='text-danger'> $daysLeft </span>";
                                         @endphp</td>
                                     <td>
-                                        <a href="{{route('post.edit',['post'=>$post])}}" class="btn primary-btn">Edit</a>
-                                        <form action="{{route('post.destroy',['post'=>$post->id])}}" class="d-inline-block" id="delPostForm" method="POST">
+                                        <a href="{{route('post.edit',['post'=>$post])}}"
+                                            class="btn primary-btn">Edit</a>
+                                        <form action="{{route('post.destroy',['post'=>$post->id])}}"
+                                            class="d-inline-block" id="delPostForm" method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" id="delPostBtn" class="btn danger-btn">Delete</button>
