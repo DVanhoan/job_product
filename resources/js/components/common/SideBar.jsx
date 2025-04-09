@@ -6,9 +6,6 @@ const SideBar = ({ conversations = [], onConversationClick, activeConversationId
 
     return (
         <div className="sidebar">
-            <div className="sidebar-header">
-                <h1>Chat</h1>
-            </div>
 
             <div className="search-bar">
                 <input type="text" placeholder="Search Messenger" />

@@ -14,7 +14,7 @@ const Message = ({ messages = [], conversationId, user, onMessageSent, isLoading
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-    console.log('crsfToken: ', csrfToken);
+    // console.log('crsfToken: ', csrfToken);
 
     useEffect(() => {
         scrollToBottom();

@@ -3,7 +3,6 @@ import { toast, Toaster } from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import SideBar from "./components/common/SideBar";
 import { useState, useEffect } from "react";
-import LoadingSpinner from "./components/common/LoadingSpinner";
 
 function Main() {
     const [activeConversationId, setActiveConversationId] = useState(null);
@@ -55,23 +54,6 @@ function Main() {
     if (error) {
         return <div>Error: {error.message}</div>;
     }
-
-
-    if (isLoading) {
-        return (
-            <div
-                style={{
-                    height: "100vh",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <LoadingSpinner size="lg" />
-            </div>
-        );
-    }
-
 
     return (
         <div className="main-layout">
