@@ -14,7 +14,9 @@ class ProvinceService
         $response = Http::withToken(self::$token)->get(self::$apiUrl);
 
         if ($response->successful()) {
-            return $response->json();
+            return [
+                'results' => $response->json(),
+            ];
         }
 
         return null;
