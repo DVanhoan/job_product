@@ -14,7 +14,7 @@ class AuthorController extends Controller
     {
         $livePosts = null;
         $company = null;
-        $followRequests = null;
+        $followRequests = collect([]);;
         $applications = null;
         $posts = null;
         if ($this->hasCompany()) {
