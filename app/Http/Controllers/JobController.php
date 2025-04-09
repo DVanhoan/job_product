@@ -49,9 +49,9 @@ class JobController extends Controller
         }
         $provinces = collect($dataObject['results'])->map(function ($item) {
             return (object) [
-                'id' => $item['province_id'],
-                'name' => $item['province_name'],
-                'type' => $item['province_type']
+                'id' => $item['code'],
+                'name' => $item['name'],
+                'type' => $item['division_type']
             ];
         })->all();
         return $provinces;
