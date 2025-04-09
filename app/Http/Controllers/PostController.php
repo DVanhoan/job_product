@@ -33,9 +33,9 @@ class PostController extends Controller
         $dataObject = $this->provinceService->getProvinces();
         return array_map(function ($data) {
             return (object) [
-                'id' => $data['province_id'],
-                'name' => $data['province_name'],
-                'type' => $data['province_type']
+                'id' => $data['code'],
+                'name' => $data['name'],
+                'type' => $data['division_type']
             ];
         }, $dataObject['results']);
     }
